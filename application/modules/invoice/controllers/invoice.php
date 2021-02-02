@@ -6,12 +6,16 @@ class Invoice extends MY_Controller
     {
         parent::__construct();
         $this->pages = 'invoice';
-        // $this->load->model('logistic_model', 'logistic');
+        $this->load->model('invoice_model', 'invoice');
     }
 
     public function index($page = NULL)
     {
-        echo "Invoice";
+        // $institutes = $this->institute->order_by('institute_name')->get_all();
+        // $total      = count($institutes);
+        $pages      = $this->pages;
+        $main_view  = 'invoice/index_invoice';
+        $this->load->view('template', compact('pages', 'main_view' ));
     }
 
     // public function add(){
