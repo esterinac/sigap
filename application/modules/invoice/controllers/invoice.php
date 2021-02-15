@@ -18,13 +18,13 @@ class Invoice extends MY_Controller
         $this->load->view('template', compact('pages', 'main_view' ));
     }
 
-    // public function add(){
-    //     if($this->check_level_gudang() == TRUE):
-    //     $pages       = $this->pages;
-    //     $main_view   = 'logistic/logistic_add';
-    //     $this->load->view('template', compact('pages', 'main_view'));
-    //     endif;
-    // }
+    public function add(){
+        //if($this->check_level_gudang() == TRUE):
+        $pages       = $this->pages;
+        $main_view   = 'invoice/add_invoice';
+        $this->load->view('template', compact('pages', 'main_view'));
+        //endif;
+    }
 
     // public function edit($logistic_id){
     //     if($this->check_level_gudang() == TRUE):
