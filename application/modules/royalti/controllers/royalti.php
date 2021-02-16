@@ -1,12 +1,12 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
 
-class Invoice extends MY_Controller
+class royalti extends MY_Controller
 {
     public function __construct()
     {
         parent::__construct();
-        $this->pages = 'invoice';
-        $this->load->model('invoice_model', 'invoice');
+        $this->pages = 'royalti';
+        $this->load->model('royalti_model', 'royalti');
     }
 
     public function index($page = NULL)
@@ -14,7 +14,7 @@ class Invoice extends MY_Controller
         // $institutes = $this->institute->order_by('institute_name')->get_all();
         // $total      = count($institutes);
         $pages      = $this->pages;
-        $main_view  = 'invoice/index_invoice';
+        $main_view  = 'royalti/index_royalti';
         $this->load->view('template', compact('pages', 'main_view'));
     }
 
@@ -22,7 +22,7 @@ class Invoice extends MY_Controller
     {
         //if($this->check_level_gudang() == TRUE):
         $pages       = $this->pages;
-        $main_view   = 'invoice/add_invoice';
+        $main_view   = 'royalti/add_royalti';
         $this->load->view('template', compact('pages', 'main_view'));
         //endif;
     }

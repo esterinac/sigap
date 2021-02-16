@@ -69,7 +69,7 @@ $menu_list = [
     ],
     [
         'name' => 'Royalti',
-        'url'  => '',
+        'url'  => 'royalti',
         'icon' => 'fa fa-star',
         'level' => 'superadmin|admin_gudang|admin_keuangan'
     ],
