@@ -160,35 +160,37 @@
                                 </div>
                             </div>
                             <hr>
-                            <table class="table table-striped table-responsive">
-                                <thead>
-                                    <tr class="text-center">
-                                        <th
-                                            scope="col"
-                                            style="min-width:400px;"
-                                        >Judul Buku</th>
-                                        <th
-                                            scope="col"
-                                            style="min-width:150px;"
-                                        >Harga</th>
-                                        <th
-                                            scope="col"
-                                            style="min-width:150px;"
-                                        >Jumlah</th>
-                                        <th
-                                            scope="col"
-                                            style="min-width:150px;"
-                                        >Total</th>
-                                        <th
-                                            scope="col"
-                                            style="min-width:100px;"
-                                        >&nbsp;</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="invoice_items">
-                                    <!-- Items -->
-                                </tbody>
-                            </table>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th
+                                                scope="col"
+                                                style="width:40%;"
+                                            >Judul Buku</th>
+                                            <th
+                                                scope="col"
+                                                style="width:15%;"
+                                            >Harga</th>
+                                            <th
+                                                scope="col"
+                                                style="width:15%;"
+                                            >Jumlah</th>
+                                            <th
+                                                scope="col"
+                                                style="width:15%;"
+                                            >Total</th>
+                                            <th
+                                                scope="col"
+                                                style="width:15%;"
+                                            >&nbsp;</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="invoice_items">
+                                        <!-- Items -->
+                                    </tbody>
+                                </table>
+                            </div>
 
                             <!-- button -->
                             <input
