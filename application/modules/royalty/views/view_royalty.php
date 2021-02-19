@@ -8,7 +8,7 @@ $level              = check_level();
                 <a href="<?= base_url(); ?>"><span class="fa fa-home"></span></a>
             </li>
             <li class="breadcrumb-item">
-                <a href="<?= base_url('royalti'); ?>">Royalti</a>
+                <a href="<?= base_url('royalty'); ?>">Royalti</a>
             </li>
             <li class="breadcrumb-item">
                 <a class="text-muted">

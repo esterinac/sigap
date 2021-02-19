@@ -1,10 +1,10 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
 
-class royalti_model extends MY_Model
+class royalty_model extends MY_Model
 {
     public $per_page = 10;
 
-    public function add_royalti()
+    public function add_royalty()
     {
         // $stock_warehouse    = $this->input->post('stock_warehouse');
         // $stock_production   = $this->input->post('stock_production');

@@ -1,12 +1,12 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
 
-class royalti extends MY_Controller
+class royalty extends MY_Controller
 {
     public function __construct()
     {
         parent::__construct();
-        $this->pages = 'royalti';
-        $this->load->model('royalti_model', 'royalti');
+        $this->pages = 'royalty';
+        $this->load->model('royalty_model', 'royalty');
     }
 
     public function index($page = NULL)
@@ -14,7 +14,7 @@ class royalti extends MY_Controller
         // $institutes = $this->institute->order_by('institute_name')->get_all();
         // $total      = count($institutes);
         $pages      = $this->pages;
-        $main_view  = 'royalti/index_royalti';
+        $main_view  = 'royalty/index_royalty';
         $this->load->view('template', compact('pages', 'main_view'));
     }
 
@@ -22,7 +22,7 @@ class royalti extends MY_Controller
     {
         //if($this->check_level_gudang() == TRUE):
         $pages       = $this->pages;
-        $main_view   = 'royalti/add_royalti';
+        $main_view   = 'royalty/add_royalty';
         $this->load->view('template', compact('pages', 'main_view'));
         //endif;
     }
@@ -44,7 +44,7 @@ class royalti extends MY_Controller
     public function view($author_id){
         //if($this->check_level() == TRUE):
         $pages          = $this->pages;
-        $main_view      = 'royalti/view_royalti';
+        $main_view      = 'royalty/view_royalty';
         
         $this->load->view('template', compact('pages', 'main_view'));
     }
