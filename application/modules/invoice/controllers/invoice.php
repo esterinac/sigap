@@ -58,32 +58,31 @@ class Invoice extends MY_Controller
     //     endif;
     // }
 
-    // public function add_logistic(){
-    //     if($this->check_level_gudang() == TRUE):
-    //     $this->load->library('form_validation');
-    //     $this->form_validation->set_rules('name', 'Nama Logistik', 'required|max_length[250]');
-    //     $this->form_validation->set_rules('type', 'Tipe Logistik', 'required|max_length[25]');
-    //     $this->form_validation->set_rules('category', 'Kategori Logistik', 'required|max_length[25]');
-    //     $this->form_validation->set_rules('notes', 'Catatan', 'max_length[1000]');
-    //     $this->form_validation->set_rules('stock_warehouse', 'Stok Gudang', 'max_length[10]');
-    //     $this->form_validation->set_rules('stock_production', 'Stok Produksi', 'max_length[10]');
-    //     $this->form_validation->set_rules('stock_other', 'Stok Lainnya', 'max_length[10]');
+    public function add_invoice()
+    {
+        // if($this->check_level_gudang() == TRUE):
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('number', 'Nomor Faktur', 'required|max_length[100]');
+        $this->form_validation->set_rules('customer_name', 'Nama Customer', 'required|max_length[100]');
+        $this->form_validation->set_rules('customer_number', 'No HP Customer', 'required|is_unique|max_length[50]');
+        $this->form_validation->set_rules('due_date', 'Jatuh Tempo', 'required');
+        $this->form_validation->set_rules('book_title', 'Judul Buku', 'required|max_length[100]');
 
-    //     if($this->form_validation->run() == FALSE){
-    //         $this->session->set_flashdata('error','Logistik gagal ditambah.');
-    //         redirect($_SERVER['HTTP_REFERER'], 'refresh');
-    //     }else{
-    //         $check = $this->logistic->add_logistic();
-    //         if($check   ==  TRUE){
-    //             $this->session->set_flashdata('success','Logistik berhasil ditambah.');
-    //             redirect('logistic');
-    //         }else{
-    //             $this->session->set_flashdata('error','Logistik gagal ditambah.');
-    //             redirect($_SERVER['HTTP_REFERER'], 'refresh');
-    //         }
-    //     }
-    //     endif;
-    // }
+        if ($this->form_validation->run() == FALSE) {
+            $this->session->set_flashdata('error', 'Faktur gagal ditambah.');
+            redirect($_SERVER['HTTP_REFERER'], 'refresh');
+        } else {
+            $check = $this->invoice->add_invoice();
+            if ($check   ==  TRUE) {
+                $this->session->set_flashdata('success', 'Faktur berhasil ditambah.');
+                redirect('logistic');
+            } else {
+                $this->session->set_flashdata('error', 'Faktur gagal ditambah.');
+                redirect($_SERVER['HTTP_REFERER'], 'refresh');
+            }
+        }
+        // endif;
+    }
 
     // public function edit_logistic($logistic_id){
     //     if($this->check_level_gudang() == TRUE):
