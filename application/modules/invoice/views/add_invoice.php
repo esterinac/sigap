@@ -38,25 +38,25 @@
                             </div>
                             <div class="form-group">
                                 <label
-                                    for="customer_name"
+                                    for="customer-name"
                                     class="font-weight-bold"
                                 >Nama Customer<abbr title="Required">*</abbr></label>
                                 <input
                                     type="text"
-                                    name="customer_name"
-                                    id="customer_name"
+                                    name="customer-name"
+                                    id="customer-name"
                                     class="form-control"
                                 />
                             </div>
                             <div class="form-group">
                                 <label
-                                    for="customer_number"
+                                    for="customer-number"
                                     class="font-weight-bold"
                                 >No HP Customer<abbr title="Required">*</abbr></label>
                                 <input
                                     type="text"
-                                    name="customer_number"
-                                    id="customer_number"
+                                    name="customer-number"
+                                    id="customer-number"
                                     class="form-control"
                                 />
                             </div>
@@ -67,8 +67,8 @@
                                 >Jatuh Tempo<abbr title="Required">*</abbr></label>
                                 <input
                                     type="text"
-                                    name="due_date"
-                                    id="due_date"
+                                    name="due-date"
+                                    id="due-date"
                                     class="form-control"
                                 />
                             </div>
@@ -76,63 +76,23 @@
                             <hr class="my-4">
                             <div class="row">
                                 <div class="form-group col-md-8">
-                                    <div id="prefetch">
-                                        <label
-                                            for="book_title"
-                                            class="font-weight-bold"
-                                        >Judul buku</label>
-                                        <input
+                                        <!-- <input
                                             type="text"
-                                            name="book_title"
-                                            id="book_title"
+                                            name="book-title"
+                                            id="book-title"
                                             class="form-control"
                                             placeholder="Cari judul buku"
                                         />
                                         <input
                                             type="hidden"
-                                            name="book_id"
-                                            id="book_id"
+                                            name="book-id"
+                                            id="book-id"
                                             class="form-control"
                                             value='0'
-                                        />
-                                    </div>
+                                        /> -->
+                                    <label for="book_id" class="font-weight-bold">Judul buku</label>
+                                    <?= form_dropdown('book_id', get_dropdown_list_book(), 0,'id="book-id" class="form-control custom-select d-block"'); ?>
                                 </div>
-                                <script
-                                    language="JavaScript"
-                                    type="text/javascript"
-                                    src="<?php echo base_url(); ?>assets/autocomplete/jquery.min.js"
-                                ></script><!-- JQuery JS -->
-                                <script
-                                    language="JavaScript"
-                                    type="text/javascript"
-                                    src="<?php echo base_url(); ?>assets/autocomplete/jquery-ui.min.js"
-                                ></script><!-- JQuery UI JS -->
-                                <script>
-                                $(document).ready(function() {
-                                    $("#book_title").autocomplete({
-                                        source: function(request, response) {
-                                            // Fetch data
-                                            $.ajax({
-                                                url: "<?php echo base_url("$pages/ac_book_id"); ?>",
-                                                type: 'post',
-                                                dataType: "json",
-                                                data: {
-                                                    search: request.term
-                                                },
-                                                success: function(data) {
-                                                    response(data);
-                                                }
-                                            });
-                                        },
-                                        select: function(event, ui) {
-                                            // Set selection
-                                            $('#book_title').val(ui.item.label); // display the selected text
-                                            $('#book_id').val(ui.item.value); // save selected id to input
-                                            return false;
-                                        }
-                                    });
-                                });
-                                </script>
                                 <div class="form-group col-md-2">
                                     <label
                                         for="amount"
@@ -143,6 +103,7 @@
                                         min="1"
                                         name="amount"
                                         id="amount"
+                                        value="1"
                                         class="form-control"
                                     />
                                 </div>
@@ -213,30 +174,60 @@
 <script>
 $(document).ready(function() {
 
-    // var count = 0;
+    $("#book-id").select2({
+        placeholder: '-- Pilih --',
+        allowClear : true,
+        dropdownParent: $('#app-main')
+    });
+    
+    function add_book_to_invoice() {
+        var bookId = document.getElementById('book-id');
 
-    function dynamic_field() {
         html = '<tr class="text-center">';
-        //html += '<td>' + count + '</td>';
-        html += '<td><input type="text" disabled name="book_title[]" class="form-control" value="' + document.getElementById('book_title').value + '"/>'
-        html += '<input type="text" hidden disabled name="book_id[]" class="form-control" value="' + document.getElementById('book_id').value + '"/></td>'
-        html += '<td>Harga</td>';
-        html += '<td><input type="number" disabled name="amount[]" class="form-control" value="' + document.getElementById('amount').value + '"/></td>';
-        html += '<td>Total</td>';
-        html += '<td><button type="button" class="btn btn-danger remove">Hapus</button></td></tr>';
+
+        // Judul option yang di select
+        html += '<td class="align-middle text-left font-weight-bold">' + bookId.options[bookId.selectedIndex].text;
+        html += '<input type="text" hidden disabled name="book_id[]" class="form-control" value="' + bookId.value + '"/>';
+        html += '</td>';
+
+        html += '<td class="align-middle">Harga</td>';
+
+        html += '<td class="align-middle">' + document.getElementById('amount').value;
+        html += '<input type="number" hidden disabled name="amount[]" class="form-control" value="' + document.getElementById('amount').value + '"/>';
+        html += '</td>';
+
+        html += '<td class="align-middle">Total</td>';
+
+        html += '<td class="align-middle"><button type="button" class="btn btn-danger remove">Hapus</button></td></tr>';
 
         $('#invoice_items').append(html);
     }
+    
+    function reset_book(){
+        
+        document.getElementById('amount').value = 1;
+        $("#book-id").val('').trigger('change')
+        
+    }
 
     $(document).on('click', '#add_item', function() {
-        // count++;
-        // alert("NGAWUR");
-        dynamic_field();
+        // Judul buku harus dipilih
+        if (document.getElementById('book-id').value === '') {
+            alert("Silakan Pilih Judul Buku!");
+            return
+        }
+        // Jumlah buku harus diisi
+        if (!(document.getElementById('amount').value > 0)) {
+            alert("Jumlah Buku Minimal = 1!");
+            return
+        }
+        else{
+            add_book_to_invoice();
+            reset_book();
+        }
     });
 
     $(document).on('click', '.remove', function() {
-        // count--;
-        // alert("GOBLOG");
         $(this).closest("tr").remove();
     });
 
