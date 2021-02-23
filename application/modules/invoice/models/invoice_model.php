@@ -10,13 +10,12 @@ class Invoice_model extends MY_Model
         $user_created       = $_SESSION['username'];
 
         $add = [
-            'name'              => $this->input->post('number'),
-            'type'              => $this->input->post('customer_name'),
-            'type'              => $this->input->post('customer_number'),
-            'type'              => $this->input->post('due_date'),
-            'category'          => $this->input->post('book_title'),
-            'date_created'      => $date_created,
-            'user_created'      => $user_created
+            'number'            => $this->input->post('number'),
+            'customer_name'     => $this->input->post('customer-name'),
+            'customer_number'   => $this->input->post('customer-number'),
+            'due_date'          => $this->input->post('due-date'),
+            'issued_date'       => $date_created
+            // 'user_created'      => $user_created
         ];
 
         $this->db->insert('invoice', $add);

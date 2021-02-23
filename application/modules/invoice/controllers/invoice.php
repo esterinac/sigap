@@ -62,11 +62,10 @@ class Invoice extends MY_Controller
     {
         // if($this->check_level_gudang() == TRUE):
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('number', 'Nomor Faktur', 'required|max_length[100]');
-        $this->form_validation->set_rules('customer_name', 'Nama Customer', 'required|max_length[100]');
-        $this->form_validation->set_rules('customer_number', 'No HP Customer', 'required|is_unique|max_length[50]');
-        $this->form_validation->set_rules('due_date', 'Jatuh Tempo', 'required');
-        $this->form_validation->set_rules('book_title', 'Judul Buku', 'required|max_length[100]');
+        $this->form_validation->set_rules('number', 'Nomor Faktur', 'required');
+        $this->form_validation->set_rules('customer-name', 'Nama Customer', 'required');
+        $this->form_validation->set_rules('customer-number', 'No HP Customer', 'required');
+        $this->form_validation->set_rules('due-date', 'Jatuh Tempo', 'required');
 
         if ($this->form_validation->run() == FALSE) {
             $this->session->set_flashdata('error', 'Faktur gagal ditambah.');
@@ -75,9 +74,9 @@ class Invoice extends MY_Controller
             $check = $this->invoice->add_invoice();
             if ($check   ==  TRUE) {
                 $this->session->set_flashdata('success', 'Faktur berhasil ditambah.');
-                redirect('logistic');
+                redirect('invoice');
             } else {
-                $this->session->set_flashdata('error', 'Faktur gagal ditambah.');
+                $this->session->set_flashdata('error', 'Faktur gagal ditambah 2.');
                 redirect($_SERVER['HTTP_REFERER'], 'refresh');
             }
         }
