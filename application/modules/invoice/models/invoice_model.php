@@ -144,39 +144,38 @@ class Invoice_model extends MY_Model
     //     return TRUE;
     // }
 
-    // public function filter_logistic($filters, $page)
-    // {
-    //     $logistic = $this->select(['logistic_id', 'name', 'type', 'category'])
-    //         ->when('keyword', $filters['keyword'])
-    //         ->order_by('name')
-    //         ->order_by('UNIX_TIMESTAMP(date_created)', 'ASC')
-    //         ->paginate($page)
-    //         ->get_all();
+    public function filter_invoice($filters, $page)
+    {
+        $invoice = $this->select(['invoice_id', 'number', 'issued_date', 'due_date', 'customer_name', 'customer_number'])
+            ->when('keyword', $filters['keyword'])
+            ->order_by('invoice_id')
+            ->paginate($page)
+            ->get_all();
 
-    //     $total = $this->select(['logistic_id', 'name', 'type', 'category'])
-    //         ->when('keyword', $filters['keyword'])
-    //         ->order_by('name')
-    //         ->order_by('UNIX_TIMESTAMP(date_created)', 'ASC')
-    //         ->count();
+        $total = $this->select(['invoice_id', 'number', 'issued_date', 'due_date', 'customer_name', 'customer_number'])
+            ->when('keyword', $filters['keyword'])
+            ->order_by('invoice_id')
+            ->count();
 
-    //     return [
-    //         'logistic'  => $logistic,
-    //         'total'     => $total,
-    //     ];
-    // }
+        return [
+            'invoice'  => $invoice,
+            'total' => $total
+        ];
+    }
 
-    // public function when($params, $data)
-    // {
-    //     // jika data null, maka skip
-    //     if ($data != '') {
-    //         if ($params == 'keyword') {
-    //             $this->group_start();
-    //             $this->or_like('name', $data);
-    //             $this->or_like('type', $data);
-    //             $this->or_like('category', $data);
-    //             $this->group_end();
-    //         }
-    //     }
-    //     return $this;
-    // }
+    public function when($params, $data)
+    {
+        // jika data null, maka skip
+        if ($data != '') {
+            if ($params == 'keyword') {
+                $this->group_start();
+                $this->or_like('invoice_id', $data);
+                $this->or_like('number', $data);
+                $this->or_like('customer_name', $data);
+                $this->or_like('customer_number', $data);
+                $this->group_end();
+            }
+        }
+        return $this;
+    }
 }

@@ -11,11 +11,21 @@ class Invoice extends MY_Controller
 
     public function index($page = NULL)
     {
-        // $institutes = $this->institute->order_by('institute_name')->get_all();
-        // $total      = count($institutes);
+        $filters = [
+            'keyword' => $this->input->get('keyword', true)
+        ];
+
+        $this->invoice->per_page = $this->input->get('per_page', true) ?? 10;
+
+        $get_data = $this->invoice->filter_invoice($filters, $page);
+
+        $invoice = $get_data['invoice'];
+        $total      = $get_data['total'];
+        $pagination = $this->invoice->make_pagination(site_url('invoice'), 2, $total);
+
         $pages      = $this->pages;
         $main_view  = 'invoice/index_invoice';
-        $this->load->view('template', compact('pages', 'main_view'));
+        $this->load->view('template', compact('pages', 'main_view', 'invoice'));
     }
 
     public function add()
@@ -41,7 +51,8 @@ class Invoice extends MY_Controller
     //     endif;
     // }
 
-    public function view($invoice_id){
+    public function view($invoice_id)
+    {
         // if($this->check_level() == TRUE):
         $pages          = $this->pages;
         $main_view      = 'invoice/view_invoice';
