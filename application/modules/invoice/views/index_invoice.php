@@ -66,42 +66,62 @@ $i                  = isset($page) ? $page * $per_page - $per_page : 0;
                         </div>
                         <?= form_close(); ?>
                     </div>
-                        <p class="text-center">Data tidak tersedia</p>
-                        <table class="table table-striped mb-0 table-responsive">
-                            <thead>
-                                <tr class="text-center">
-                                    <th scope="col" class="pl-4">No</th>
-                                    <th scope="col" style="min-width:500px;">Nomor Faktur</th>
-                                    <th scope="col" style="min-width:150px;">Tanggal</th>
-                                    <th scope="col" style="min-width:150px;">Status</th>
-                                    <th scope="col" style="min-width:100px;"></th>
-                                    <!-- <?php if($level == 'superadmin' || $level == 'admin_gudang'): ?>
+                    <p class="text-center">Data tidak tersedia</p>
+                    <table class="table table-striped mb-0 table-responsive">
+                        <thead>
+                            <tr class="text-center">
+                                <th
+                                    scope="col"
+                                    class="pl-4"
+                                >No</th>
+                                <th
+                                    scope="col"
+                                    style="min-width:500px;"
+                                >Nomor Faktur</th>
+                                <th
+                                    scope="col"
+                                    style="min-width:150px;"
+                                >Tanggal</th>
+                                <th
+                                    scope="col"
+                                    style="min-width:150px;"
+                                >Jatuh Tempo</th>
+                                <th
+                                    scope="col"
+                                    style="min-width:100px;"
+                                >Status</th>
+                                <!-- <?php if ($level == 'superadmin' || $level == 'admin_gudang') : ?>
                                     <th style="min-width:100px;"> &nbsp; </th>
                                     <?php endif; ?> -->
-                                </tr>
-                            </thead>
-                            <tbody>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($invoice as $lData) : ?>
                                 <tr class="text-center">
                                     <td class="align-middle pl-4">
-                                        1
+                                        <?= ++$i; ?>
                                     </td>
                                     <td class="text-left align-middle">
-                                        <a href="" class="font-weight-bold">
-                                            echo highlight_keyword($lData->nomor, $keyword);
+                                        <a
+                                            href=""
+                                            class="font-weight-bold"
+                                        >
+                                            <?= highlight_keyword($lData->number, $keyword); ?>
                                         </a>
                                     </td>
                                     <td class="align-middle">
-                                        echo highlight_keyword($lData->tanggal, $keyword);
+                                        <?= date("d/m/y", strtotime($lData->issued_date)); ?>
                                     </td>
                                     <td class="align-middle">
-                                        echo highlight_keyword($lData->status, $keyword);
+                                        <?= date("d/m/y", strtotime($lData->due_date)); ?>
                                     </td>
                                     <td class="align-middle">
-                                        Button
+                                        <?= highlight_keyword($lData->status, $keyword); ?>
                                     </td>
                                 </tr>
-                            </tbody>
-                        </table>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
                     <?= $pagination ?? null; ?>
                 </div>
             </section>
