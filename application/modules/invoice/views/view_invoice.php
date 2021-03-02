@@ -55,23 +55,23 @@ $level              = check_level();
                             <tbody>
                                 <tr>
                                     <td width="200px"> Nomor Faktur </td>
-                                    <td><strong>$lData->number</strong> </td>
+                                    <td><strong><?= $lData->number ?></strong> </td>
                                 </tr>
                                 <tr>
                                     <td width="200px"> Tipe </td>
-                                    <td>$lData->type</td>
+                                    <td><?= $lData->type ?></td>
                                 </tr>
                                 <tr>
                                     <td width="200px"> Nama Customer </td>
-                                    <td>$lData->customer_name</td>
+                                    <td><?= $lData->customer_name ?></td>
                                 </tr>
                                 <tr>
                                     <td width="200px"> Nomor Customer </td>
-                                    <td>$lData->customer_number</td>
+                                    <td><?= $lData->customer_number ?></td>
                                 </tr>
                                 <tr>
                                     <td width="200px"> Tanggal Jatuh Tempo </td>
-                                    <td>$lData->due_date</td>
+                                    <td><?= $lData->due_date ?></td>
                                 </tr>
                             </tbody>
                         </table>

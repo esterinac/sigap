@@ -103,7 +103,7 @@ $i                  = isset($page) ? $page * $per_page - $per_page : 0;
                                     </td>
                                     <td class="text-left align-middle">
                                         <a
-                                            href=""
+                                            href="<?= base_url("$pages/view/$lData->number"); ?>"
                                             class="font-weight-bold"
                                         >
                                             <?= highlight_keyword($lData->number, $keyword); ?>

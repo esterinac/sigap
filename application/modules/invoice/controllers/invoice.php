@@ -56,12 +56,13 @@ class Invoice extends MY_Controller
         // if($this->check_level() == TRUE):
         $pages          = $this->pages;
         $main_view      = 'invoice/view_invoice';
-        // $lData          = $this->logistic->fetch_logistic_id($logistic_id);
+        $lData          = $this->invoice->fetch_invoice_id($invoice_id);
         // $get_stock      = $this->logistic->fetch_stock_by_id($logistic_id);
         // $stock_history  = $get_stock['stock_history'];
         // $stock_last     = $get_stock['stock_last'];
         // if(empty($lData) == FALSE):
-        $this->load->view('template', compact('pages', 'main_view'));
+		var_dump($lData);
+        $this->load->view('template', compact('pages', 'main_view', 'lData'));
         // else:
         // $this->session->set_flashdata('error','Halaman tidak ditemukan.');
         // redirect(base_url(), 'refresh');

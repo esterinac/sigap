@@ -65,15 +65,15 @@ class Invoice_model extends MY_Model
     //     return TRUE;
     // }
 
-    // public function fetch_logistic_id($logistic_id)
-    // {
-    //     return $this->db
-    //         ->select('*')
-    //         ->from('logistic')
-    //         ->where('logistic_id', $logistic_id)
-    //         ->get()
-    //         ->row();
-    // }
+    public function fetch_invoice_id($invoice_id)
+    {
+		return $this->db
+		->select('*')
+		->from('invoice')
+		->where('number', $invoice_id)
+		->get()
+		->row();
+    }
 
     // public function fetch_stock_by_id($logistic_id)
     // {
