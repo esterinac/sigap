@@ -128,6 +128,10 @@
                                         <td width="175px"> Harga </td>
                                         <td id="info-price"></td>
                                     </tr>
+                                    <tr>
+                                        <td width="175px"> Stock </td>
+                                        <td id="info-stock"></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -317,7 +321,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "GET",
-            url: "<?= base_url('print_order/api_get_book/'); ?>" + bookId,
+            url: "<?= base_url('invoice/api_get_book/'); ?>" + bookId,
             datatype: "JSON",
             success: function(res) {
                 console.log(res);
@@ -328,6 +332,7 @@ $(document).ready(function() {
                 $('#info-isbn').html(res.data.isbn)
                 $('#info-price').html(res.data.harga)
                 $('#info-year').html(published_date.getFullYear())
+                $('#info-stock').html(res.data.book_stock_id)
 
             },
             error: function(err) {

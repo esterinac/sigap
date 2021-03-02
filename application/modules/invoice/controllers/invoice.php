@@ -155,6 +155,15 @@ class Invoice extends MY_Controller
     //     }
     //     endif;
     // }
+    
+    public function api_get_book($book_id)
+    {
+        // $this->db->select('warehouse_present');
+        // $this->db->where('book_id', $book_id);
+        // $book = $this->db->get('book_stock')->result();
+        // var_dump($book);
+        return $this->send_json_output(true, $this->invoice->get_book($book_id));
+    }
 
     // public function delete_logistic_stock($logistic_stock_id){
     //     if($this->check_level_gudang() == TRUE):

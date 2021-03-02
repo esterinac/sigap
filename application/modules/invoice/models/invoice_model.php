@@ -143,6 +143,13 @@ class Invoice_model extends MY_Model
     //     return TRUE;
     // }
 
+    public function get_book($book_id)
+    {
+        return $this->select('book.*')
+            ->where('book_id', $book_id)
+            ->get('book');
+    }
+
     public function filter_invoice($filters, $page)
     {
         $invoice = $this->select(['invoice_id', 'number', 'issued_date', 'due_date', 'status'])
