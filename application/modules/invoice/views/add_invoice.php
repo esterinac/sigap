@@ -102,33 +102,84 @@
                             >Judul buku</label>
                             <?= form_dropdown('book_id', get_dropdown_list_book(), 0, 'id="book-id" class="form-control custom-select d-block"'); ?>
                         </div>
-                        <div class="form-group col-md-2">
-                            <label
-                                for="amount"
-                                class="font-weight-bold"
-                            >Jumlah</label>
-                            <input
-                                type="number"
-                                min="1"
-                                name="amount"
-                                id="amount"
-                                value="1"
-                                class="form-control"
-                            />
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label
-                                for="add_item"
-                                class="font-weight-bold"
-                            >Tambah Barang</label>
-                            <button
-                                type="button"
-                                id="add_item"
-                                name="add_item"
-                                class="form-control btn btn-primary text-white"
-                            >Tambah Barang</button>
-                        </div>
+                        
                     </div>
+
+                    <div
+                        id="book-info"
+                        style="display:none"
+                    >
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered mb-0">
+                                <tbody>
+                                    <tr>
+                                        <td width="175px"> Judul Buku </td>
+                                        <td id="info-book-title"></a></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="175px"> ISBN </td>
+                                        <td id="info-isbn"></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="175px"> Tahun Terbit </td>
+                                        <td id="info-year"></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="175px"> Harga </td>
+                                        <td id="info-price"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <br>
+
+                        <div class="row">
+                            <div class="form-group col-md-2">
+                                <label
+                                    for="amount"
+                                    class="font-weight-bold"
+                                >Jumlah</label>
+                                <input
+                                    type="number"
+                                    min="1"
+                                    name="amount"
+                                    id="amount"
+                                    value="1"
+                                    class="form-control"
+                                />
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label
+                                    for="discount"
+                                    class="font-weight-bold"
+                                >Diskon (%)</label>
+                                <input
+                                    type="number"
+                                    min="0"
+                                    max="100"
+                                    name="discount"
+                                    id="discount"
+                                    value="0"
+                                    class="form-control"
+                                />
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label
+                                    for="add_item"
+                                    class="font-weight-bold"
+                                >Tambah Barang</label>
+                                <button
+                                    type="button"
+                                    id="add_item"
+                                    name="add_item"
+                                    class="form-control btn btn-primary text-white"
+                                >Tambah Barang</button>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+
                     <hr>
                     <div class="table-responsive">
                         <table class="table table-striped">
@@ -149,10 +200,14 @@
                                     <th
                                         scope="col"
                                         style="width:15%;"
-                                    >Total</th>
+                                    >Diskon</th>
                                     <th
                                         scope="col"
                                         style="width:15%;"
+                                    >Total</th>
+                                    <th
+                                        scope="col"
+                                        style="width:8%;"
                                     >&nbsp;</th>
                                 </tr>
                             </thead>
@@ -205,6 +260,10 @@ $(document).ready(function() {
         html += '<input type="number" hidden disabled name="amount[]" class="form-control" value="' + document.getElementById('amount').value + '"/>';
         html += '</td>';
 
+        html += '<td class="align-middle">' + document.getElementById('discount').value;
+        html += '<input type="number" hidden disabled name="discount[]" class="form-control" value="' + document.getElementById('discount').value  + '"/>' + '%' ;
+        html += '</td>';
+
         html += '<td class="align-middle">Total</td>';
 
         html += '<td class="align-middle"><button type="button" class="btn btn-danger remove">Hapus</button></td></tr>';
@@ -232,6 +291,7 @@ $(document).ready(function() {
         } else {
             add_book_to_invoice();
             reset_book();
+            $('#book-info').hide();
         }
     });
 
@@ -248,6 +308,32 @@ $(document).ready(function() {
 
     $("#due_clear").click(function() {
         $flatpickr.clear();
+    })
+
+
+    $('#book-id').change(function(e) {
+        const bookId = e.target.value
+        console.log(bookId)
+
+        $.ajax({
+            type: "GET",
+            url: "<?= base_url('print_order/api_get_book/'); ?>" + bookId,
+            datatype: "JSON",
+            success: function(res) {
+                console.log(res);
+                var published_date = new Date(res.data.published_date);
+                
+                $('#book-info').show()
+                $('#info-book-title').html(res.data.book_title)
+                $('#info-isbn').html(res.data.isbn)
+                $('#info-price').html(res.data.harga)
+                $('#info-year').html(published_date.getFullYear())
+
+            },
+            error: function(err) {
+                console.log(err);
+            },
+        });
     })
 
 });
