@@ -13,7 +13,7 @@ $level              = check_level();
             </li>
             <li class="breadcrumb-item">
                 <a class="text-muted">
-                    echo $lData->name</a>
+                    <?= $lData->number ?></a>
             </li>
         </ol>
     </nav>
