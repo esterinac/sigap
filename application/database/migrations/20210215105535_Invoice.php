@@ -31,11 +31,7 @@ class Migration_Invoice extends CI_Migration
                 'type' => 'VARCHAR',
                 'constraint' => 25,
             ],
-            'customer_name' => [
-                'type' => 'VARCHAR',
-                'constraint' => 100,
-            ],
-            'customer_number' => [
+            'customer_id' => [
                 'type' => 'VARCHAR',
                 'constraint' => 20,
             ],
