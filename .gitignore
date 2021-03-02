@@ -18,3 +18,5 @@ application/logs/*
 .env.development
 *.development
 *.sqlite
+.vs/sigaproyalti/v16/.suo
+.vs/VSWorkspaceState.json
