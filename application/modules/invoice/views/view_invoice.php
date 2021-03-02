@@ -61,13 +61,14 @@ $level              = check_level();
                                     <td width="200px"> Tipe </td>
                                     <td><?= $lData->type ?></td>
                                 </tr>
-                                <tr>
+                                <!-- <tr>
                                     <td width="200px"> Nama Customer </td>
                                     <td><?= $lData->customer_name ?></td>
                                 </tr>
+								-->
                                 <tr>
                                     <td width="200px"> Nomor Customer </td>
-                                    <td><?= $lData->customer_number ?></td>
+                                    <td><?= $lData->customer_id ?></td>
                                 </tr>
                                 <tr>
                                     <td width="200px"> Tanggal Jatuh Tempo </td>

@@ -74,8 +74,8 @@ class Invoice extends MY_Controller
         // if($this->check_level_gudang() == TRUE):
         $this->load->library('form_validation');
         $this->form_validation->set_rules('number', 'Nomor Faktur', 'required');
-        $this->form_validation->set_rules('customer-name', 'Nama Customer', 'required');
-        $this->form_validation->set_rules('customer-number', 'No HP Customer', 'required');
+        //$this->form_validation->set_rules('customer-name', 'Nama Customer', 'required');
+        $this->form_validation->set_rules('customer-id', 'No HP Customer', 'required');
         $this->form_validation->set_rules('due-date', 'Jatuh Tempo', 'required');
 
         if ($this->form_validation->run() == FALSE) {

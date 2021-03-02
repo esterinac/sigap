@@ -11,8 +11,7 @@ class Invoice_model extends MY_Model
 
         $add = [
             'number'            => $this->input->post('number'),
-            'customer_name'     => $this->input->post('customer-name'),
-            'customer_number'   => $this->input->post('customer-number'),
+            'customer_id'   => $this->input->post('customer-id'),
             'due_date'          => $this->input->post('due-date'),
             'issued_date'       => $date_created
             // 'user_created'      => $user_created

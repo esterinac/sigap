@@ -32,7 +32,7 @@
                             class="form-control"
                         />
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label
                             for="customer-name"
                             class="font-weight-bold"
@@ -43,16 +43,16 @@
                             id="customer-name"
                             class="form-control"
                         />
-                    </div>
+                    </div> -->
                     <div class="form-group">
                         <label
-                            for="customer-number"
+                            for="customer-id"
                             class="font-weight-bold"
                         >No HP Customer<abbr title="Required">*</abbr></label>
                         <input
                             type="text"
-                            name="customer-number"
-                            id="customer-number"
+                            name="customer-id"
+                            id="customer-id"
                             class="form-control"
                         />
                     </div>
