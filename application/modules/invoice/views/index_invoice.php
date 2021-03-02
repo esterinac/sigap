@@ -2,8 +2,20 @@
 $level              = check_level();
 $per_page           = 10;
 $keyword            = $this->input->get('keyword');
+$category           = $this->input->get('category');
 $page               = $this->uri->segment(2);
 $i                  = isset($page) ? $page * $per_page - $per_page : 0;
+
+
+$category_options = [
+    ''  => '- Filter Kategori Cetak -',
+    'new' => 'Cetak Baru',
+    'revise' => 'Cetak Ulang Revisi',
+    'reprint' => 'Cetak Ulang Non Revisi',
+    'nonbook' => 'Cetak Non Buku',
+    'outsideprint' => 'Cetak Di Luar',
+    'from_outside' => 'Cetak Dari Luar'
+];
 ?>
 
 <header class="page-title-bar">
@@ -36,9 +48,13 @@ $i                  = isset($page) ? $page * $per_page - $per_page : 0;
                     <div class="p-3">
                         <?= form_open($pages, ['method' => 'GET']); ?>
                         <div class="row">
-                            <div class="col-12 col-md-4">
+                            <div class="col-8 col-md-2">
                                 <label for="per_page">Data per halaman</label>
                                 <?= form_dropdown('per_page', get_per_page_options(), $per_page, 'id="per_page" class="form-control custom-select d-block" title="List per page"'); ?>
+                            </div>
+							<div class="col-8 col-md-2">
+                                <label for="per_page">Kategori</label>
+                                <?= form_dropdown('category', $category_options, $category, 'id="category" class="form-control custom-select d-block" title="List per page"'); ?>
                             </div>
                             <div class="col-12 col-md-4">
                                 <label for="status">Pencarian</label>
