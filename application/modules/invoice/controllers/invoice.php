@@ -73,26 +73,53 @@ class Invoice extends MY_Controller
     public function add_invoice()
     {
         // if($this->check_level_gudang() == TRUE):
-        $this->load->library('form_validation');
-        $this->load->helper(array('form', 'url'));
+        // $this->load->library('form_validation');
+        // $this->load->helper(array('form', 'url'));
 
-        $this->form_validation->set_rules('number', 'Nomor Faktur', 'required');
-        $this->form_validation->set_rules('customer-id', 'No HP Customer', 'required');
-        $this->form_validation->set_rules('due-date', 'Jatuh Tempo', 'required');
+        // $this->form_validation->set_rules('number', 'Nomor Faktur', 'required');
+        // $this->form_validation->set_rules('customer-id', 'No HP Customer', 'required');
+        // $this->form_validation->set_rules('due-date', 'Jatuh Tempo', 'required');
 
-        if ($this->form_validation->run() == FALSE) {
-            $this->session->set_flashdata('error', 'Faktur gagal ditambah.');
-            redirect($_SERVER['HTTP_REFERER'], 'refresh');
-        } else {
-            $check = $this->invoice->add_invoice();
-            if ($check   ==  TRUE) {
-                $this->session->set_flashdata('success', 'Faktur berhasil ditambah.');
+        // if ($this->form_validation->run() == FALSE) {
+        //     $this->session->set_flashdata('error', 'Faktur gagal ditambah.');
+        //     redirect($_SERVER['HTTP_REFERER'], 'refresh');
+        // } else {
+            // $check = $this->invoice->add_invoice();
+            // if ($check   ==  TRUE) {
+            //     $this->session->set_flashdata('success', 'Faktur berhasil ditambah.');
 
-                redirect('invoice');
-            } else {
-                $this->session->set_flashdata('error', 'Faktur gagal ditambah 2.');
-                redirect($_SERVER['HTTP_REFERER'], 'refresh');
-            }
+            //     redirect('invoice');
+            // } else {
+            //     $this->session->set_flashdata('error', 'Faktur gagal ditambah 2.');
+            //     redirect($_SERVER['HTTP_REFERER'], 'refresh');
+            // }
+        // }
+            
+        $date_created       = date('Y-m-d H:i:s');
+        //$user_created       = $_SESSION['username'];
+
+        $add = [
+            'number'            => $this->input->post('number'),
+            'customer_id'       => $this->input->post('customer-id'),
+            'due_date'          => $this->input->post('due-date'),
+            'issued_date'       => $date_created
+            // 'user_created'      => $user_created
+        ];
+        $this->db->insert('invoice', $add);
+
+        $invoice_id = $this->db->insert_id();
+
+        $countsize = $this->input->post('invoice_book_id');
+
+        for ($i=0; $i<$countsize ; $i++) 
+        {
+            $book = [
+                'invoice_id'    => $invoice_id,
+                'book_id'       => $this->input->post('invoice_book_id')[$i],
+                'qty'           => $this->input->post('invoice_qty')[$i],
+                'discount'      => $this->input->post('invoice_discount')[$i]
+            ];
+            $this->db->insert('invoice_book', $book);
         }
 
         // endif;
