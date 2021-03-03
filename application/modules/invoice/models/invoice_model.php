@@ -7,23 +7,21 @@ class Invoice_model extends MY_Model
     public function add_invoice()
     {
         $date_created       = date('Y-m-d H:i:s');
-        $user_created       = $_SESSION['username'];
+        //$user_created       = $_SESSION['username'];
 
         $add = [
             'number'            => $this->input->post('number'),
-            'customer_id'   => $this->input->post('customer-id'),
+            'customer_id'       => $this->input->post('customer-id'),
             'due_date'          => $this->input->post('due-date'),
             'issued_date'       => $date_created
             // 'user_created'      => $user_created
         ];
-
         $this->db->insert('invoice', $add);
 
         // if (empty($stock_warehouse) == FALSE || empty($stock_production) == FALSE || empty($stock_other) == FALSE) {
         //     $logistic_id = $this->db->insert_id();
         //     // $this->initial_stock($logistic_id, abs($stock_warehouse), abs($stock_production), abs($stock_other), $user_created, $date_created);
         // }
-
         return TRUE;
     }
 

@@ -32,18 +32,6 @@
                             class="form-control"
                         />
                     </div>
-                    <!-- <div class="form-group">
-                        <label
-                            for="customer-name"
-                            class="font-weight-bold"
-                        >Nama Customer<abbr title="Required">*</abbr></label>
-                        <input
-                            type="text"
-                            name="customer-name"
-                            id="customer-name"
-                            class="form-control"
-                        />
-                    </div> -->
                     <div class="form-group">
                         <label
                             for="customer-id"
@@ -82,20 +70,6 @@
                     <hr class="my-4">
                     <div class="row">
                         <div class="form-group col-md-8">
-                            <!-- <input
-                                            type="text"
-                                            name="book-title"
-                                            id="book-title"
-                                            class="form-control"
-                                            placeholder="Cari judul buku"
-                                        />
-                                        <input
-                                            type="hidden"
-                                            name="book-id"
-                                            id="book-id"
-                                            class="form-control"
-                                            value='0'
-                                        /> -->
                             <label
                                 for="book_id"
                                 class="font-weight-bold"
@@ -140,14 +114,14 @@
                         <div class="row">
                             <div class="form-group col-md-2">
                                 <label
-                                    for="amount"
+                                    for="qty"
                                     class="font-weight-bold"
                                 >Jumlah</label>
                                 <input
                                     type="number"
                                     min="1"
-                                    name="amount"
-                                    id="amount"
+                                    name="qty"
+                                    id="qty"
                                     value="1"
                                     class="form-control"
                                 />
@@ -215,7 +189,7 @@
                                     >&nbsp;</th>
                                 </tr>
                             </thead>
-                            <tbody id="invoice_items">
+                            <tbody id="invoice_items">                                
                                 <!-- Items -->
                             </tbody>
                         </table>
@@ -242,67 +216,6 @@
 <script>
 $(document).ready(function() {
 
-    $("#book-id").select2({
-        placeholder: '-- Pilih --',
-        allowClear: true,
-        dropdownParent: $('#app-main')
-    });
-
-    function add_book_to_invoice() {
-        var bookId = document.getElementById('book-id');
-
-        html = '<tr class="text-center">';
-
-        // Judul option yang di select
-        html += '<td class="align-middle text-left font-weight-bold">' + bookId.options[bookId.selectedIndex].text;
-        html += '<input type="text" hidden disabled name="book_id[]" class="form-control" value="' + bookId.value + '"/>';
-        html += '</td>';
-
-        html += '<td class="align-middle">Harga</td>';
-
-        html += '<td class="align-middle">' + document.getElementById('amount').value;
-        html += '<input type="number" hidden disabled name="amount[]" class="form-control" value="' + document.getElementById('amount').value + '"/>';
-        html += '</td>';
-
-        html += '<td class="align-middle">' + document.getElementById('discount').value;
-        html += '<input type="number" hidden disabled name="discount[]" class="form-control" value="' + document.getElementById('discount').value  + '"/>' + '%' ;
-        html += '</td>';
-
-        html += '<td class="align-middle">Total</td>';
-
-        html += '<td class="align-middle"><button type="button" class="btn btn-danger remove">Hapus</button></td></tr>';
-
-        $('#invoice_items').append(html);
-    }
-
-    function reset_book() {
-
-        document.getElementById('amount').value = 1;
-        $("#book-id").val('').trigger('change')
-
-    }
-
-    $(document).on('click', '#add_item', function() {
-        // Judul buku harus dipilih
-        if (document.getElementById('book-id').value === '') {
-            alert("Silakan Pilih Judul Buku!");
-            return
-        }
-        // Jumlah buku harus diisi
-        if (!(document.getElementById('amount').value > 0)) {
-            alert("Jumlah Buku Minimal = 1!");
-            return
-        } else {
-            add_book_to_invoice();
-            reset_book();
-            $('#book-info').hide();
-        }
-    });
-
-    $(document).on('click', '.remove', function() {
-        $(this).closest("tr").remove();
-    });
-
     const $flatpickr = $('.dates').flatpickr({
         altInput: true,
         altFormat: 'j F Y',
@@ -314,6 +227,79 @@ $(document).ready(function() {
         $flatpickr.clear();
     })
 
+    $("#book-id").select2({
+        placeholder: '-- Pilih --',
+        dropdownParent: $('#app-main')
+    });
+
+    function add_book_to_invoice() {
+        var bookId = document.getElementById('book-id');
+
+        html = '<tr class="text-center">';
+
+        // Judul option yang di select
+        html += '<td class="align-middle text-left font-weight-bold">' + bookId.options[bookId.selectedIndex].text;
+        html += '<input type="text" disabled name="invoice_book_id[]" class="form-control" value="' + bookId.value + '"/>';
+        html += '</td>';
+
+        // Harga
+        html += '<td class="align-middle">' + $('#info-price').text();
+        html += '</td>';
+
+        // Jumlah
+        html += '<td class="align-middle">' + document.getElementById('qty').value;
+        html += '<input type="number" disabled name="invoice_qty[]" class="form-control" value="' + document.getElementById('qty').value + '"/>';
+        html += '</td>';
+
+        // Diskon
+        html += '<td class="align-middle">' + document.getElementById('discount').value  + '%';
+        html += '<input type="number" disabled id="invoice_discount[]" class="form-control" value="' + document.getElementById('discount').value  + '"/>';
+        html += '</td>';
+
+        // Total
+        var totalPrice = (parseFloat($('#info-price').text())) * (parseFloat($('#qty').val())) * (1 - (parseFloat($('#discount').val()) /100));
+        html += '<td class="align-middle">' + totalPrice + '</td>';
+
+        // Button Hapus
+        html += '<td class="align-middle"><button type="button" class="btn btn-danger remove">Hapus</button></td></tr>';
+
+        $('#invoice_items').append(html);
+    }
+
+    function reset_book() {
+
+        document.getElementById('qty').value = 1;
+        document.getElementById('discount').value = 0;
+        $("#book-id").val('').trigger('change')
+        $('#book-info').hide();
+    }
+
+    $(document).on('click', '#add_item', function() {
+        // Judul buku harus dipilih
+        if (document.getElementById('book-id').value === '') {
+            alert("Silakan Pilih Judul Buku!");
+            return
+        }
+        // Jumlah buku harus diisi
+        if (!(document.getElementById('qty').value > 0)) {
+            alert("Jumlah Buku Minimal = 1!");
+            return
+        }
+        // Diskon antara 0-100%
+        if ((document.getElementById('discount').value > 100) || (document.getElementById('discount').value < 0)) {
+            alert("Masukkan diskon antara 0 - 100!");
+            return
+        } 
+        else {
+            add_book_to_invoice();
+            reset_book();
+        }
+    });
+
+    $(document).on('click', '.remove', function() {
+        $(this).closest("tr").remove();
+        
+    });
 
     $('#book-id').change(function(e) {
         const bookId = e.target.value
@@ -332,7 +318,7 @@ $(document).ready(function() {
                 $('#info-isbn').html(res.data.isbn)
                 $('#info-price').html(res.data.harga)
                 $('#info-year').html(published_date.getFullYear())
-                $('#info-stock').html(res.data.book_stock_id)
+                //$('#info-stock').html(res.data.book_stock_id)
 
             },
             error: function(err) {

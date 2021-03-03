@@ -74,8 +74,9 @@ class Invoice extends MY_Controller
     {
         // if($this->check_level_gudang() == TRUE):
         $this->load->library('form_validation');
+        $this->load->helper(array('form', 'url'));
+
         $this->form_validation->set_rules('number', 'Nomor Faktur', 'required');
-        //$this->form_validation->set_rules('customer-name', 'Nama Customer', 'required');
         $this->form_validation->set_rules('customer-id', 'No HP Customer', 'required');
         $this->form_validation->set_rules('due-date', 'Jatuh Tempo', 'required');
 
@@ -86,12 +87,14 @@ class Invoice extends MY_Controller
             $check = $this->invoice->add_invoice();
             if ($check   ==  TRUE) {
                 $this->session->set_flashdata('success', 'Faktur berhasil ditambah.');
+
                 redirect('invoice');
             } else {
                 $this->session->set_flashdata('error', 'Faktur gagal ditambah 2.');
                 redirect($_SERVER['HTTP_REFERER'], 'refresh');
             }
         }
+
         // endif;
     }
 
@@ -158,10 +161,6 @@ class Invoice extends MY_Controller
     
     public function api_get_book($book_id)
     {
-        // $this->db->select('warehouse_present');
-        // $this->db->where('book_id', $book_id);
-        // $book = $this->db->get('book_stock')->result();
-        // var_dump($book);
         return $this->send_json_output(true, $this->invoice->get_book($book_id));
     }
 
