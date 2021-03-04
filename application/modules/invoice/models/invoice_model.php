@@ -18,10 +18,21 @@ class Invoice_model extends MY_Model
         ];
         $this->db->insert('invoice', $add);
 
-        // if (empty($stock_warehouse) == FALSE || empty($stock_production) == FALSE || empty($stock_other) == FALSE) {
-        //     $logistic_id = $this->db->insert_id();
-        //     // $this->initial_stock($logistic_id, abs($stock_warehouse), abs($stock_production), abs($stock_other), $user_created, $date_created);
-        // }
+        $invoice_id = $this->db->insert_id();
+
+        // Jumlah Buku di Faktur
+        $countsize = $this->input->post('invoice_book_id');
+
+        for ($i=0; $i<$countsize ; $i++) 
+        {
+            $book = [
+                'invoice_id'    => $invoice_id,
+                'book_id'       => $this->input->post('invoice_book_id')[$i],
+                'qty'           => $this->input->post('invoice_qty')[$i],
+                'discount'      => $this->input->post('invoice_discount')[$i]
+            ];
+            $this->db->insert('invoice_book', $book);
+        }
         return TRUE;
     }
 

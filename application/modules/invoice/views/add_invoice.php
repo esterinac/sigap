@@ -18,7 +18,7 @@
         <div class="col-md-12">
             <section class="card">
                 <div class="card-body">
-                    <form id="invoice_form" method="post" action="<?= base_url("invoice/add_invoice"); ?>">
+                    <form id="invoice_form" method="post" action="<?= base_url("invoice/add_invoice"); ?>" redirect="<?= base_url("invoice"); ?>">
                         <legend>Form Tambah Faktur</legend>
                         <div class="form-group">
                             <label
@@ -227,7 +227,7 @@ $(document).ready(function() {
 
         // Judul option yang di select
         html += '<td class="align-middle text-left font-weight-bold">' + bookId.options[bookId.selectedIndex].text;
-        html += '<input type="text" name="invoice_book_id[]" class="form-control" value="' + bookId.value + '"/>';
+        html += '<input type="text" hidden name="invoice_book_id[]" class="form-control" value="' + bookId.value + '"/>';
         html += '</td>';
 
         // Harga
@@ -236,12 +236,12 @@ $(document).ready(function() {
 
         // Jumlah
         html += '<td class="align-middle">' + document.getElementById('qty').value;
-        html += '<input type="number" name="invoice_qty[]" class="form-control" value="' + document.getElementById('qty').value + '"/>';
+        html += '<input type="number" hidden name="invoice_qty[]" class="form-control" value="' + document.getElementById('qty').value + '"/>';
         html += '</td>';
 
         // Diskon
         html += '<td class="align-middle">' + document.getElementById('discount').value  + '%';
-        html += '<input type="number" name="invoice_discount[]" class="form-control" value="' + document.getElementById('discount').value  + '"/>';
+        html += '<input type="number" hidden name="invoice_discount[]" class="form-control" value="' + document.getElementById('discount').value  + '"/>';
         html += '</td>';
 
         // Total
@@ -321,14 +321,28 @@ $(document).ready(function() {
 
         var form = $(this);
         var url = form.attr('action');
+        var redirect = form.attr('redirect');
+        var form_valid = "TRUE";
 
         $.ajax({
             type: "POST",
             url: url,
             data: form.serialize(), // serializes the form's elements.
-            success: function(data)
+            success: function(result)
             {
-                alert(data); // show response from the php script.
+                // Validation Error
+                if(!(result === "no_errors"))
+                {
+                    alert("Semua data Faktur harus diisi dan Faktur tidak boleh kosong!");
+                    form_valid = "FALSE";
+                }
+            },
+            complete: function()
+            {
+                if(form_valid == "TRUE")
+                {
+                    location.href = redirect;
+                }
             }
         });
     })
