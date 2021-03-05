@@ -7,6 +7,7 @@ class Invoice extends MY_Controller
         parent::__construct();
         $this->pages = 'invoice';
         $this->load->model('invoice_model', 'invoice');
+        $this->load->model('book/Book_model', 'book');
     }
 
     public function index($page = NULL)
@@ -58,12 +59,22 @@ class Invoice extends MY_Controller
         $pages          = $this->pages;
         $main_view      = 'invoice/view_invoice';
         $lData          = $this->invoice->fetch_invoice_id($invoice_id);
+        $invoice_books  = $this->invoice->fetch_invoice_book($invoice_id);
+//join invoice books + books untuk qty dan diskon
+
+        // foreach($invoice_books as $invoice_book)
+        // {
+        //     $total = $invoice_book->harga * $invoice_book->qty * (1 - $invoice_book->discount);
+        //     var_dump($invoice_book);
+        // }
+        
+
         // $get_stock      = $this->logistic->fetch_stock_by_id($logistic_id);
         // $stock_history  = $get_stock['stock_history'];
         // $stock_last     = $get_stock['stock_last'];
         // if(empty($lData) == FALSE):
-		var_dump($lData);
-        $this->load->view('template', compact('pages', 'main_view', 'lData'));
+		//var_dump($invoice_books);
+        $this->load->view('template', compact('pages', 'main_view', 'lData', 'invoice_books'));
         // else:
         // $this->session->set_flashdata('error','Halaman tidak ditemukan.');
         // redirect(base_url(), 'refresh');

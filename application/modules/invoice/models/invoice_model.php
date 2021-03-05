@@ -78,7 +78,28 @@ class Invoice_model extends MY_Model
 		return $this->db
 		->select('*')
 		->from('invoice')
-		->where('number', $invoice_id)
+		->where('invoice_id', $invoice_id)
+		->get()
+		->row();
+    }
+
+    public function fetch_invoice_book($invoice_id)
+    {
+		return $this->db
+		->select('invoice_book.*, book.book_title, book.harga')
+		->from('invoice_book')
+        ->join('book', 'book.book_id = invoice_book.book_id')
+		->where('invoice_id', $invoice_id)
+        ->get()
+		->result();
+    }
+
+    public function fetch_book_info($book_id)
+    {
+        return $this->db
+		->select('book_title')
+		->from('book')
+		->where('book_id', $book_id)
 		->get()
 		->row();
     }
