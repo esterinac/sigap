@@ -119,7 +119,7 @@ $category_options = [
                                     </td>
                                     <td class="text-left align-middle">
                                         <a
-                                            href="<?= base_url("$pages/view/$lData->number"); ?>"
+                                            href="<?= base_url("$pages/view/$lData->invoice_id"); ?>"
                                             class="font-weight-bold"
                                         >
                                             <?= highlight_keyword($lData->number, $keyword); ?>

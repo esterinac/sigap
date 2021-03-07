@@ -84,7 +84,7 @@ $level              = check_level();
                             <tbody>
                                 <tr>
                                     <td width="200px"> Tanggal di buat </td>
-                                    <td>$lData->date_created</td>
+                                    <td><?= $lData->issued_date ?></td>
                                 </tr>
                                 <tr>
                                     <td width="200px"> User </td>
@@ -110,7 +110,7 @@ $level              = check_level();
                             >Judul Buku</th>
                             <th
                                 scope="col"
-                                style="width:20%;"
+                                style="width:25%;"
                             >Nama Penulis</th>
                             <th
                                 scope="col"
@@ -122,38 +122,42 @@ $level              = check_level();
                             >Jumlah</th>
                             <th
                                 scope="col"
-                                style="width:15%;"
-                            >Total</th>
+                                style="width:5%;"
+                            >Diskon</th>
                             <th
                                 scope="col"
-                                style="width:8%;"
-                            >&nbsp;</th>
+                                style="width:15%;"
+                            >Total</th>
                         </tr>
                     </thead>
                     <tbody>
+                    <?php $i = 0; ?>
+                    <?php foreach ($invoice_books as $invoice_book) : ?>
+                    <?php $i++; ?>
                         <tr class="text-center">
                             <td class="align-middle pl-4">
-                                1
+                                <?= $i ?>
                             </td>
                             <td class="align-middle">
-                                Judul Buku
+                                <?= $invoice_book->book_title ?>
                             </td>
                             <td class="align-middle">
                                 Penulis
                             </td>
                             <td class="align-middle">
-                                Rp 100.000
+                                Rp <?= $invoice_book->harga ?>
                             </td>
                             <td class="align-middle">
-                                99
+                                <?= $invoice_book->qty ?>
                             </td>
                             <td class="align-middle">
-                                Rp 9.900.000
+                                <?= $invoice_book->discount ?> %
                             </td>
                             <td class="align-middle">
-                                Button
+                                Rp <?= $invoice_book->harga * $invoice_book->qty * (1 - $invoice_book->discount/100) ?>
                             </td>
                         </tr>
+                    <?php endforeach; ?>
                     </tbody>
                 </table>
 				<br>
