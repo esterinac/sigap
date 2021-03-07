@@ -27,7 +27,7 @@ class Invoice extends MY_Controller
 
         $pages      = $this->pages;
         $main_view  = 'invoice/index_invoice';
-        $this->load->view('template', compact('pages', 'main_view', 'invoice'));
+        $this->load->view('template', compact('pages', 'main_view', 'invoice', 'pagination'));
     }
 
     public function add()

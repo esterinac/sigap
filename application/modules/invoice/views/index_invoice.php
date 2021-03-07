@@ -46,19 +46,19 @@ $category_options = [
                     <div class="p-3">
                         <?= form_open($pages, ['method' => 'GET']); ?>
                         <div class="row">
-                            <div class="col-8 col-md-2">
+                            <div class="col-8 col-md-3">
                                 <label for="per_page">Data per halaman</label>
                                 <?= form_dropdown('per_page', get_per_page_options(), $per_page, 'id="per_page" class="form-control custom-select d-block" title="List per page"'); ?>
                             </div>
-                            <div class="col-8 col-md-2">
-                                <label for="per_page">Kategori</label>
+                            <div class="col-8 col-md-3">
+                                <label for="per_page">Jenis</label>
                                 <?= form_dropdown('category', get_invoice_category(), $category, 'id="category" class="form-control custom-select d-block" title="List per page"'); ?>
                             </div>
                             <div class="col-12 col-md-4">
                                 <label for="status">Pencarian</label>
                                 <?= form_input('keyword', $keyword, 'placeholder="Cari berdasarkan Nama, Tipe, Kategori" class="form-control"'); ?>
                             </div>
-                            <div class="col-12 col-lg-4">
+                            <div class="col-12 col-md-2">
                                 <label>&nbsp;</label>
                                 <div
                                     class="btn-group btn-block"
@@ -84,26 +84,12 @@ $category_options = [
                     <table class="table table-striped mb-0 table-responsive">
                         <thead>
                             <tr class="text-center">
-                                <th
-                                    scope="col"
-                                    class="pl-4"
-                                >No</th>
-                                <th
-                                    scope="col"
-                                    style="min-width:500px;"
-                                >Nomor Faktur</th>
-                                <th
-                                    scope="col"
-                                    style="min-width:150px;"
-                                >Tanggal</th>
-                                <th
-                                    scope="col"
-                                    style="min-width:150px;"
-                                >Jatuh Tempo</th>
-                                <th
-                                    scope="col"
-                                    style="min-width:100px;"
-                                >Status</th>
+                                <th scope="col" style="width:5%;" class="pl-4">No</th>
+                                <th scope="col" style="width:40%;">Nomor Faktur</th>
+                                <th scope="col" style="width:20%;">Jenis</th>
+                                <th scope="col" style="width:15%;">Tanggal Dibuat</th>
+                                <th scope="col" style="width:15%;">Jatuh Tempo</th>
+                                <th scope="col" style="width:15%;" class="pr-4">Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -121,12 +107,15 @@ $category_options = [
                                         </a>
                                     </td>
                                     <td class="align-middle">
+                                        <?= $lData->type ?>
+                                    </td>
+                                    <td class="align-middle">
                                         <?= date("d/m/y", strtotime($lData->issued_date)); ?>
                                     </td>
                                     <td class="align-middle">
                                         <?= date("d/m/y", strtotime($lData->due_date)); ?>
                                     </td>
-                                    <td class="align-middle">
+                                    <td class="align-middle pr-4">
                                         <?= get_print_order_category()[$lData->status]; ?>
                                     </td>
                                 </tr>

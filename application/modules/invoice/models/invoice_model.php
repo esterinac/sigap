@@ -181,7 +181,7 @@ class Invoice_model extends MY_Model
 
     public function filter_invoice($filters, $page)
     {
-        $invoice = $this->select(['invoice_id', 'number', 'issued_date', 'due_date', 'status'])
+        $invoice = $this->select(['invoice_id', 'number', 'issued_date', 'due_date', 'status', 'type'])
             ->when('keyword', $filters['keyword'])
             ->when('status', $filters['category'])
             ->order_by('invoice_id')
