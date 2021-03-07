@@ -156,6 +156,8 @@ $level              = check_level();
                         </tr>
                     </tbody>
                 </table>
+				<br>
+				<a style="float:right;" class="btn btn-outline-danger" href="<?php echo base_url('invoice/pdf') ?>" <i class="fa fa-file"></i> Generate PDF<i class="fas fa-file-pdf fa-fw"></i></a>
 
             </div>
         </div>
