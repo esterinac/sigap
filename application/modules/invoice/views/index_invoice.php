@@ -8,13 +8,11 @@ $i                  = isset($page) ? $page * $per_page - $per_page : 0;
 
 
 $category_options = [
-    ''  => '- Filter Kategori Cetak -',
-    'new' => 'Cetak Baru',
-    'revise' => 'Cetak Ulang Revisi',
-    'reprint' => 'Cetak Ulang Non Revisi',
-    'nonbook' => 'Cetak Non Buku',
-    'outsideprint' => 'Cetak Di Luar',
-    'from_outside' => 'Cetak Dari Luar'
+    ''  => '- Filter Kategori Faktur -',
+    'credit' => 'Kredit',
+    'cash' => 'Tunai',
+    'online' => 'Online',
+    'showroom' => 'Showroom'
 ];
 ?>
 
@@ -52,9 +50,9 @@ $category_options = [
                                 <label for="per_page">Data per halaman</label>
                                 <?= form_dropdown('per_page', get_per_page_options(), $per_page, 'id="per_page" class="form-control custom-select d-block" title="List per page"'); ?>
                             </div>
-							<div class="col-8 col-md-2">
+                            <div class="col-8 col-md-2">
                                 <label for="per_page">Kategori</label>
-                                <?= form_dropdown('category', $category_options, $category, 'id="category" class="form-control custom-select d-block" title="List per page"'); ?>
+                                <?= form_dropdown('category', get_invoice_category(), $category, 'id="category" class="form-control custom-select d-block" title="List per page"'); ?>
                             </div>
                             <div class="col-12 col-md-4">
                                 <label for="status">Pencarian</label>
@@ -106,9 +104,6 @@ $category_options = [
                                     scope="col"
                                     style="min-width:100px;"
                                 >Status</th>
-                                <!-- <?php if ($level == 'superadmin' || $level == 'admin_gudang') : ?>
-                                    <th style="min-width:100px;"> &nbsp; </th>
-                                    <?php endif; ?> -->
                             </tr>
                         </thead>
                         <tbody>
@@ -132,7 +127,7 @@ $category_options = [
                                         <?= date("d/m/y", strtotime($lData->due_date)); ?>
                                     </td>
                                     <td class="align-middle">
-                                        <?= highlight_keyword($lData->status, $keyword); ?>
+                                        <?= get_print_order_category()[$lData->status]; ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

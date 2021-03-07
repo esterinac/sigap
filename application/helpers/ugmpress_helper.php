@@ -584,6 +584,17 @@ function expand($authors)
     return $authors_list;
 }
 
+function get_invoice_category()
+{
+    return [
+        ''  => '- Filter Kategori Invoice -',
+        'credit' => 'Kredit',
+        'cash' => 'Tunai',
+        'online' => 'Online',
+        'showroom' => 'Showroom'
+    ];
+}
+
 function get_print_order_category()
 {
     return [

@@ -23,8 +23,7 @@ class Invoice_model extends MY_Model
         // Jumlah Buku di Faktur
         $countsize = $this->input->post('invoice_book_id');
 
-        for ($i=0; $i<$countsize ; $i++) 
-        {
+        for ($i = 0; $i < $countsize; $i++) {
             $book = [
                 'invoice_id'    => $invoice_id,
                 'book_id'       => $this->input->post('invoice_book_id')[$i],
@@ -75,33 +74,33 @@ class Invoice_model extends MY_Model
 
     public function fetch_invoice_id($invoice_id)
     {
-		return $this->db
-		->select('*')
-		->from('invoice')
-		->where('invoice_id', $invoice_id)
-		->get()
-		->row();
+        return $this->db
+            ->select('*')
+            ->from('invoice')
+            ->where('invoice_id', $invoice_id)
+            ->get()
+            ->row();
     }
 
     public function fetch_invoice_book($invoice_id)
     {
-		return $this->db
-		->select('invoice_book.*, book.book_title, book.harga')
-		->from('invoice_book')
-        ->join('book', 'book.book_id = invoice_book.book_id')
-		->where('invoice_id', $invoice_id)
-        ->get()
-		->result();
+        return $this->db
+            ->select('invoice_book.*, book.book_title, book.harga')
+            ->from('invoice_book')
+            ->join('book', 'book.book_id = invoice_book.book_id')
+            ->where('invoice_id', $invoice_id)
+            ->get()
+            ->result();
     }
 
     public function fetch_book_info($book_id)
     {
         return $this->db
-		->select('book_title')
-		->from('book')
-		->where('book_id', $book_id)
-		->get()
-		->row();
+            ->select('book_title')
+            ->from('book')
+            ->where('book_id', $book_id)
+            ->get()
+            ->row();
     }
 
     // public function fetch_stock_by_id($logistic_id)
@@ -184,12 +183,14 @@ class Invoice_model extends MY_Model
     {
         $invoice = $this->select(['invoice_id', 'number', 'issued_date', 'due_date', 'status'])
             ->when('keyword', $filters['keyword'])
+            ->when('status', $filters['category'])
             ->order_by('invoice_id')
             ->paginate($page)
             ->get_all();
 
         $total = $this->select(['invoice_id', 'number'])
             ->when('keyword', $filters['keyword'])
+            ->when('status', $filters['category'])
             ->order_by('invoice_id')
             ->count();
 
@@ -209,6 +210,10 @@ class Invoice_model extends MY_Model
                 $this->or_like('number', $data);
                 $this->or_like('customer_name', $data);
                 $this->or_like('customer_number', $data);
+                $this->group_end();
+            } else {
+                $this->group_start();
+                $this->or_like('status', $data);
                 $this->group_end();
             }
         }
