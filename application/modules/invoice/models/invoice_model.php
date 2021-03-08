@@ -179,6 +179,13 @@ class Invoice_model extends MY_Model
             ->get('book');
     }
 
+    public function get_customer($customer_id)
+    {
+        return $this->select('customer.*')
+            ->where('customer_id', $customer_id)
+            ->get('customer');
+    }
+
     public function filter_invoice($filters, $page)
     {
         $invoice = $this->select(['invoice_id', 'number', 'issued_date', 'due_date', 'status', 'type'])

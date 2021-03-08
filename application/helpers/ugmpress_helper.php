@@ -154,6 +154,17 @@ function get_dropdown_list_book()
     return get_dropdown_list('book', ['book_id', 'book_title'], $condition);
 }
 
+function get_customer_list()
+{
+    $condition = function () {
+        $CI = &get_instance();
+        $CI->db->order_by('customer_id', 'asc');
+        return $CI;
+    };
+
+    return get_dropdown_list('customer', ['customer_id', 'name'], $condition);
+}
+
 /**
  * Membuat array draft yang final (draft_status = 14)
  *

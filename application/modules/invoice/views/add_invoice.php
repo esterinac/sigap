@@ -18,7 +18,12 @@
         <div class="col-md-12">
             <section class="card">
                 <div class="card-body">
-                    <form id="invoice_form" method="post" action="<?= base_url("invoice/add_invoice"); ?>" redirect="<?= base_url("invoice"); ?>">
+                    <form
+                        id="invoice_form"
+                        method="post"
+                        action="<?= base_url("invoice/add_invoice"); ?>"
+                        redirect="<?= base_url("invoice"); ?>"
+                    >
                         <legend>Form Tambah Faktur</legend>
                         <div class="form-group">
                             <label
@@ -29,18 +34,6 @@
                                 type="text"
                                 name="number"
                                 id="number"
-                                class="form-control"
-                            />
-                        </div>
-                        <div class="form-group">
-                            <label
-                                for="customer-id"
-                                class="font-weight-bold"
-                            >No HP Customer<abbr title="Required">*</abbr></label>
-                            <input
-                                type="text"
-                                name="customer-id"
-                                id="customer-id"
                                 class="form-control"
                             />
                         </div>
@@ -71,15 +64,53 @@
                         <div class="row">
                             <div class="form-group col-md-8">
                                 <label
+                                    for="customer_id"
+                                    class="font-weight-bold"
+                                >Customer</label>
+                                <?= form_dropdown('customer_id', get_customer_list(), 0, 'id="customer-id" class="form-control custom-select d-block"'); ?>
+                            </div>
+                        </div>
+                        <div
+                            id="customer-info"
+                            style="display: none;"
+                        >
+                            <table class="table table-striped table-bordered mb-0">
+                                <tbody>
+                                    <tr>
+                                        <td width="175px"> Nama Pembeli </td>
+                                        <td id="info-customer-name"></a></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="175px"> Alamat </td>
+                                        <td id="info-address"></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="175px"> Nomor Telepon </td>
+                                        <td id="info-phone-number"></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="175px"> Tipe Membership </td>
+                                        <td id="info-type"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <hr class="my-4">
+                        <div class="row">
+                            <div class="form-group col-md-8">
+                                <label
                                     for="book_id"
                                     class="font-weight-bold"
                                 >Judul buku</label>
                                 <?= form_dropdown('book_id', get_dropdown_list_book(), 0, 'id="book-id" class="form-control custom-select d-block"'); ?>
                             </div>
-                            
+
                         </div>
 
-                        <div id="book-info" style="display:none">
+                        <div
+                            id="book-info"
+                            style="display:none"
+                        >
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered mb-0">
                                     <tbody>
@@ -151,7 +182,7 @@
                                     >Tambah Barang</button>
                                 </div>
                             </div>
-                            
+
                         </div>
 
                         <hr>
@@ -185,15 +216,23 @@
                                         >&nbsp;</th>
                                     </tr>
                                 </thead>
-                                <tbody id="invoice_items">                                
+                                <tbody id="invoice_items">
                                     <!-- Items -->
                                 </tbody>
                             </table>
                         </div>
 
                         <!-- button -->
-                        <input type="submit" class="btn btn-primary" value="Submit"/>
-                        <a class="btn btn-secondary" href="<?= base_url($pages); ?>" role="button">Back</a>
+                        <input
+                            type="submit"
+                            class="btn btn-primary"
+                            value="Submit"
+                        />
+                        <a
+                            class="btn btn-secondary"
+                            href="<?= base_url($pages); ?>"
+                            role="button"
+                        >Back</a>
                     </form>
                 </div>
             </section>
@@ -215,6 +254,10 @@ $(document).ready(function() {
         $flatpickr.clear();
     })
 
+    $("#customer-id").select2({
+        placeholder: '-- Pilih --',
+        dropdownParent: $('#app-main')
+    });
     $("#book-id").select2({
         placeholder: '-- Pilih --',
         dropdownParent: $('#app-main')
@@ -240,12 +283,12 @@ $(document).ready(function() {
         html += '</td>';
 
         // Diskon
-        html += '<td class="align-middle">' + document.getElementById('discount').value  + '%';
-        html += '<input type="number" hidden name="invoice_discount[]" class="form-control" value="' + document.getElementById('discount').value  + '"/>';
+        html += '<td class="align-middle">' + document.getElementById('discount').value + '%';
+        html += '<input type="number" hidden name="invoice_discount[]" class="form-control" value="' + document.getElementById('discount').value + '"/>';
         html += '</td>';
 
         // Total
-        var totalPrice = (parseFloat($('#info-price').text())) * (parseFloat($('#qty').val())) * (1 - (parseFloat($('#discount').val()) /100));
+        var totalPrice = (parseFloat($('#info-price').text())) * (parseFloat($('#qty').val())) * (1 - (parseFloat($('#discount').val()) / 100));
         html += '<td class="align-middle">' + totalPrice + '</td>';
 
         // Button Hapus
@@ -277,8 +320,7 @@ $(document).ready(function() {
         if ((document.getElementById('discount').value > 100) || (document.getElementById('discount').value < 0)) {
             alert("Masukkan diskon antara 0 - 100!");
             return
-        } 
-        else {
+        } else {
             add_book_to_invoice();
             reset_book();
         }
@@ -286,12 +328,11 @@ $(document).ready(function() {
 
     $(document).on('click', '.remove', function() {
         $(this).closest("tr").remove();
-        
+
     });
 
     $('#book-id').change(function(e) {
         const bookId = e.target.value
-        console.log(bookId)
 
         $.ajax({
             type: "GET",
@@ -300,7 +341,7 @@ $(document).ready(function() {
             success: function(res) {
                 console.log(res);
                 var published_date = new Date(res.data.published_date);
-                
+
                 $('#book-info').show()
                 $('#info-book-title').html(res.data.book_title)
                 $('#info-isbn').html(res.data.isbn)
@@ -311,6 +352,27 @@ $(document).ready(function() {
             },
             error: function(err) {
                 console.log(err);
+            },
+        });
+    })
+
+    $('#customer-id').change(function(e) {
+        const customerId = e.target.value
+
+        $.ajax({
+            type: "GET",
+            url: "<?= base_url('invoice/api_get_customer/'); ?>" + customerId,
+            datatype: "JSON",
+            success: function(res) {
+                $('#customer-info').show()
+                $('#info-customer-name').html(res.data.name)
+                $('#info-address').html(res.data.address)
+                $('#info-phone-number').html(res.data.phone_number)
+                $('#info-type').html(res.data.type)
+
+            },
+            error: function(err) {
+                $('#customer-info').hide()
             },
         });
     })
@@ -328,19 +390,15 @@ $(document).ready(function() {
             type: "POST",
             url: url,
             data: form.serialize(), // serializes the form's elements.
-            success: function(result)
-            {
+            success: function(result) {
                 // Validation Error
-                if(!(result === "no_errors"))
-                {
+                if (!(result === "no_errors")) {
                     alert("Semua data Faktur harus diisi dan Faktur tidak boleh kosong!");
                     form_valid = "FALSE";
                 }
             },
-            complete: function()
-            {
-                if(form_valid == "TRUE")
-                {
+            complete: function() {
+                if (form_valid == "TRUE") {
                     location.href = redirect;
                 }
             }

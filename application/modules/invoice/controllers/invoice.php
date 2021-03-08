@@ -88,7 +88,7 @@ class Invoice extends MY_Controller
         // $this->load->helper(array('form', 'url'));
 
         $this->form_validation->set_rules('number', 'Nomor Faktur', 'required');
-        $this->form_validation->set_rules('customer-id', 'No HP Customer', 'required');
+        // $this->form_validation->set_rules('customer-id', 'No HP Customer', 'required');
         $this->form_validation->set_rules('due-date', 'Jatuh Tempo', 'required');
 
         $this->form_validation->set_rules('invoice_book_id[]', 'Buku Invoice', 'required');
@@ -174,6 +174,11 @@ class Invoice extends MY_Controller
     public function api_get_book($book_id)
     {
         return $this->send_json_output(true, $this->invoice->get_book($book_id));
+    }
+
+    public function api_get_customer($customer_id)
+    {
+        return $this->send_json_output(true, $this->invoice->get_customer($customer_id));
     }
 
     // public function delete_logistic_stock($logistic_stock_id){
