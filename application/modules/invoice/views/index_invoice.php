@@ -30,7 +30,7 @@ $category_options = [
     <div class="d-flex justify-content-between align-items-center">
         <div>
             <h1 class="page-title"> Faktur </h1>
-            <span class="badge badge-info">Total : echo $total</span>
+            <span class="badge badge-info">Total : <?= $total; ?></span>
         </div>
         <a
             href="<?= base_url("$pages/add"); ?>"
@@ -80,48 +80,51 @@ $category_options = [
                         </div>
                         <?= form_close(); ?>
                     </div>
-                    <p class="text-center">Data tidak tersedia</p>
-                    <table class="table table-striped mb-0 table-responsive">
-                        <thead>
-                            <tr class="text-center">
-                                <th scope="col" style="width:5%;" class="pl-4">No</th>
-                                <th scope="col" style="width:40%;">Nomor Faktur</th>
-                                <th scope="col" style="width:20%;">Jenis</th>
-                                <th scope="col" style="width:15%;">Tanggal Dibuat</th>
-                                <th scope="col" style="width:15%;">Jatuh Tempo</th>
-                                <th scope="col" style="width:15%;" class="pr-4">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($invoice as $lData) : ?>
+                    <?php if($total == 0): ?>
+                        <p class="text-center">Data tidak tersedia</p>
+                    <?php else:?>
+                        <table class="table table-striped mb-0 table-responsive">
+                            <thead>
                                 <tr class="text-center">
-                                    <td class="align-middle pl-4">
-                                        <?= ++$i; ?>
-                                    </td>
-                                    <td class="text-left align-middle">
-                                        <a
-                                            href="<?= base_url("$pages/view/$lData->invoice_id"); ?>"
-                                            class="font-weight-bold"
-                                        >
-                                            <?= highlight_keyword($lData->number, $keyword); ?>
-                                        </a>
-                                    </td>
-                                    <td class="align-middle">
-                                        <?= $lData->type ?>
-                                    </td>
-                                    <td class="align-middle">
-                                        <?= date("d/m/y", strtotime($lData->issued_date)); ?>
-                                    </td>
-                                    <td class="align-middle">
-                                        <?= date("d/m/y", strtotime($lData->due_date)); ?>
-                                    </td>
-                                    <td class="align-middle pr-4">
-                                        <?= get_print_order_category()[$lData->status]; ?>
-                                    </td>
+                                    <th scope="col" style="width:5%;" class="pl-4">No</th>
+                                    <th scope="col" style="width:40%;">Nomor Faktur</th>
+                                    <th scope="col" style="width:20%;">Jenis</th>
+                                    <th scope="col" style="width:15%;">Tanggal Dibuat</th>
+                                    <th scope="col" style="width:15%;">Jatuh Tempo</th>
+                                    <th scope="col" style="width:15%;" class="pr-4">Status</th>
                                 </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($invoice as $lData) : ?>
+                                    <tr class="text-center">
+                                        <td class="align-middle pl-4">
+                                            <?= ++$i; ?>
+                                        </td>
+                                        <td class="text-left align-middle">
+                                            <a
+                                                href="<?= base_url("$pages/view/$lData->invoice_id"); ?>"
+                                                class="font-weight-bold"
+                                            >
+                                                <?= highlight_keyword($lData->number, $keyword); ?>
+                                            </a>
+                                        </td>
+                                        <td class="align-middle">
+                                            <?= $lData->type ?>
+                                        </td>
+                                        <td class="align-middle">
+                                            <?= date("d/m/y", strtotime($lData->issued_date)); ?>
+                                        </td>
+                                        <td class="align-middle">
+                                            <?= date("d/m/y", strtotime($lData->due_date)); ?>
+                                        </td>
+                                        <td class="align-middle pr-4">
+                                            <?= get_invoice_category()[$lData->status]; ?>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    <?php endif;?>
                     <?= $pagination ?? null; ?>
                 </div>
             </section>
