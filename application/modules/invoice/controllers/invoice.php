@@ -33,9 +33,16 @@ class Invoice extends MY_Controller
     public function add()
     {
         //if($this->check_level_gudang() == TRUE):
+        $invoice_type = array(
+            'credit'      => 'Kredit',
+            'online'      => 'Online',
+            'cash'        => 'Tunai',
+            'showroom'    => 'Showroom',
+        );  
+
         $pages       = $this->pages;
         $main_view   = 'invoice/add_invoice';
-        $this->load->view('template', compact('pages', 'main_view'));
+        $this->load->view('template', compact('pages', 'main_view', 'invoice_type'));
         //endif;
     }
 

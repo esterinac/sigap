@@ -37,6 +37,16 @@
                                 class="form-control"
                             />
                         </div>
+
+                        <div class="form-group">
+                            <label
+                                for="type"
+                                class="font-weight-bold"
+                            >Jenis Faktur<abbr title="Required">*</abbr></label>
+
+                            <?= form_dropdown('type', $invoice_type, 0, 'id="type" class="form-control custom-select d-block"'); ?>
+                        </div>
+
                         <div class="form-group">
                             <label
                                 for="due-date"
@@ -70,10 +80,7 @@
                                 <?= form_dropdown('customer_id', get_customer_list(), 0, 'id="customer-id" class="form-control custom-select d-block"'); ?>
                             </div>
                         </div>
-                        <div
-                            id="customer-info"
-                            style="display: none;"
-                        >
+                        <div id="customer-info" style="display: none;">
                             <table class="table table-striped table-bordered mb-0">
                                 <tbody>
                                     <tr>
