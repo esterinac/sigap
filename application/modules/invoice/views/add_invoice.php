@@ -74,10 +74,10 @@
                         <div class="row">
                             <div class="form-group col-md-8">
                                 <label
-                                    for="customer_id"
+                                    for="customer-id"
                                     class="font-weight-bold"
                                 >Customer</label>
-                                <?= form_dropdown('customer_id', get_customer_list(), 0, 'id="customer-id" class="form-control custom-select d-block"'); ?>
+                                <?= form_dropdown('customer-id', get_customer_list(), 0, 'id="customer-id" class="form-control custom-select d-block"'); ?>
                             </div>
                         </div>
                         <div id="customer-info" style="display: none;">
@@ -392,7 +392,7 @@ $(document).ready(function() {
         var url = form.attr('action');
         var redirect = form.attr('redirect');
         var form_valid = "TRUE";
-
+        
         $.ajax({
             type: "POST",
             url: url,
