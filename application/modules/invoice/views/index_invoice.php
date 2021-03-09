@@ -80,18 +80,38 @@ $category_options = [
                         </div>
                         <?= form_close(); ?>
                     </div>
-                    <?php if($total == 0): ?>
+                    <?php if ($total == 0) : ?>
                         <p class="text-center">Data tidak tersedia</p>
-                    <?php else:?>
+                    <?php else : ?>
                         <table class="table table-striped mb-0 table-responsive">
                             <thead>
                                 <tr class="text-center">
-                                    <th scope="col" style="width:5%;" class="pl-4">No</th>
-                                    <th scope="col" style="width:40%;">Nomor Faktur</th>
-                                    <th scope="col" style="width:20%;">Jenis</th>
-                                    <th scope="col" style="width:15%;">Tanggal Dibuat</th>
-                                    <th scope="col" style="width:15%;">Jatuh Tempo</th>
-                                    <th scope="col" style="width:15%;" class="pr-4">Status</th>
+                                    <th
+                                        scope="col"
+                                        style="width:5%;"
+                                        class="pl-4"
+                                    >No</th>
+                                    <th
+                                        scope="col"
+                                        style="width:40%;"
+                                    >Nomor Faktur</th>
+                                    <th
+                                        scope="col"
+                                        style="width:20%;"
+                                    >Jenis</th>
+                                    <th
+                                        scope="col"
+                                        style="width:15%;"
+                                    >Tanggal Dibuat</th>
+                                    <th
+                                        scope="col"
+                                        style="width:15%;"
+                                    >Jatuh Tempo</th>
+                                    <th
+                                        scope="col"
+                                        style="width:15%;"
+                                        class="pr-4"
+                                    >Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -109,7 +129,7 @@ $category_options = [
                                             </a>
                                         </td>
                                         <td class="align-middle">
-                                            <?= $lData->type ?>
+                                            <?= get_invoice_category()[$lData->type]; ?>
                                         </td>
                                         <td class="align-middle">
                                             <?= date("d/m/y", strtotime($lData->issued_date)); ?>
@@ -118,13 +138,13 @@ $category_options = [
                                             <?= date("d/m/y", strtotime($lData->due_date)); ?>
                                         </td>
                                         <td class="align-middle pr-4">
-                                            <?= get_invoice_category()[$lData->status]; ?>
+                                            <?= highlight_keyword($lData->status, $keyword); ?>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
-                    <?php endif;?>
+                    <?php endif; ?>
                     <?= $pagination ?? null; ?>
                 </div>
             </section>
