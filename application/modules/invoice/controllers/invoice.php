@@ -21,7 +21,7 @@ class Invoice extends MY_Controller
 
         $get_data = $this->invoice->filter_invoice($filters, $page);
 
-        $invoices = $get_data['invoice'];
+        $invoice = $get_data['invoice'];
         $total      = $get_data['total'];
         $pagination = $this->invoice->make_pagination(site_url('invoice'), 2, $total);
 
