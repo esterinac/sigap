@@ -46,6 +46,19 @@
 
                             <?= form_dropdown('type', $invoice_type, 0, 'id="type" class="form-control custom-select d-block"'); ?>
                         </div>
+                        <div
+                            id="invoice-type"
+                            style="display: none;"
+                        >
+                            <table class="table table-striped table-bordered mb-0">
+                                <tbody>
+                                    <tr>
+                                        <td width="175px"> Nomor Faktur </td>
+                                        <td id="info-invoice-number"></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
                         <div class="form-group">
                             <label
@@ -80,7 +93,10 @@
                                 <?= form_dropdown('customer-id', get_customer_list(), 0, 'id="customer-id" class="form-control custom-select d-block"'); ?>
                             </div>
                         </div>
-                        <div id="customer-info" style="display: none;">
+                        <div
+                            id="customer-info"
+                            style="display: none;"
+                        >
                             <table class="table table-striped table-bordered mb-0">
                                 <tbody>
                                     <tr>
@@ -249,7 +265,7 @@
 
 <script>
 $(document).ready(function() {
-
+    $('#type').val('')
     const $flatpickr = $('.dates').flatpickr({
         altInput: true,
         altFormat: 'j F Y',
@@ -384,6 +400,22 @@ $(document).ready(function() {
         });
     })
 
+    $('#type').change(function(e) {
+        const type = e.target.value
+        $.ajax({
+            type: "GET",
+            url: "<?= base_url('invoice/api_get_last_invoice_number/'); ?>" + type,
+            datatype: "JSON",
+            success: function(res) {
+                $('#invoice-type').show()
+                $('#info-invoice-number').html(res.data)
+            },
+            error: function(err) {
+                $('#invoice-type').hide()
+            },
+        });
+    })
+
     $("#invoice_form").submit(function(e) {
 
         e.preventDefault(); // avoid to execute the actual submit of the form.
@@ -392,7 +424,7 @@ $(document).ready(function() {
         var url = form.attr('action');
         var redirect = form.attr('redirect');
         var form_valid = "TRUE";
-        
+
         $.ajax({
             type: "POST",
             url: url,

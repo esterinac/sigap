@@ -38,7 +38,7 @@ class Invoice extends MY_Controller
             'online'      => 'Online',
             'cash'        => 'Tunai',
             'showroom'    => 'Showroom',
-        );  
+        );
 
         $pages       = $this->pages;
         $main_view   = 'invoice/add_invoice';
@@ -95,9 +95,9 @@ class Invoice extends MY_Controller
         // $this->load->helper(array('form', 'url'));
 
         $this->form_validation->set_rules('number', 'Nomor Faktur', 'required');
-        // $this->form_validation->set_rules('customer-id', 'No HP Customer', 'required');
+        $this->form_validation->set_rules('customer-id', 'No HP Customer', 'required');
         $this->form_validation->set_rules('due-date', 'Jatuh Tempo', 'required');
-
+        $this->form_validation->set_rules('type', 'Tipe Faktur', 'required');
         $this->form_validation->set_rules('invoice_book_id[]', 'Buku Invoice', 'required');
 
         if ($this->form_validation->run() == FALSE) {
@@ -186,6 +186,11 @@ class Invoice extends MY_Controller
     public function api_get_customer($customer_id)
     {
         return $this->send_json_output(true, $this->invoice->get_customer($customer_id));
+    }
+
+    public function api_get_last_invoice_number($type)
+    {
+        return $this->send_json_output(true, $this->invoice->get_last_invoice_number($type));
     }
 
     // public function delete_logistic_stock($logistic_stock_id){

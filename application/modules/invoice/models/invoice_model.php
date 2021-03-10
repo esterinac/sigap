@@ -13,6 +13,7 @@ class Invoice_model extends MY_Model
             'number'            => $this->input->post('number'),
             'customer_id'       => $this->input->post('customer-id'),
             'due_date'          => $this->input->post('due-date'),
+            'type'              => $this->input->post('type'),
             'issued_date'       => $date_created
             // 'user_created'      => $user_created
         ];
@@ -184,6 +185,29 @@ class Invoice_model extends MY_Model
         return $this->select('customer.*')
             ->where('customer_id', $customer_id)
             ->get('customer');
+    }
+
+    public function get_last_invoice_number($type)
+    {
+        $initial = '';
+        switch ($type) {
+            case 'credit':
+                $initial = 'K';
+                break;
+            case 'cash':
+                $initial = 'T';
+                break;
+            case 'online':
+                $initial = 'TO';
+                break;
+            case 'showroom':
+                $initial = 'S';
+                break;
+        }
+        $date_created       = substr(date('Ymd'), 2);
+        $data = $this->db->select('*')->where('type', $type)->count_all_results('invoice') + 1;
+        $invoiceNumber = $initial . $date_created . '-' . str_pad($data, 6, 0, STR_PAD_LEFT);
+        return $invoiceNumber;
     }
 
     public function filter_invoice($filters, $page)
