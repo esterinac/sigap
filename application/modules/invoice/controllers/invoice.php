@@ -12,14 +12,17 @@ class Invoice extends MY_Controller
 
     public function index($page = NULL)
     {
+       
         $filters = [
-            'keyword' => $this->input->get('keyword', true),
-            'category'              => $this->input->get('category', true)
+            'keyword'   => $this->input->get('keyword', true),
+            'category'  => $this->input->get('category', true),
+            'status'    => $this->input->get('status', true)
         ];
 
         $this->invoice->per_page = $this->input->get('per_page', true) ?? 10;
 
         $get_data = $this->invoice->filter_invoice($filters, $page);
+        var_dump($filters['category']);
 
         $invoice = $get_data['invoice'];
         $total      = $get_data['total'];

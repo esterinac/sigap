@@ -14,6 +14,7 @@ class Invoice_model extends MY_Model
             'customer_id'       => $this->input->post('customer-id'),
             'due_date'          => $this->input->post('due-date'),
             'type'              => $this->input->post('type'),
+            'status'            => 'waiting',
             'issued_date'       => $date_created
             // 'user_created'      => $user_created
         ];
@@ -214,14 +215,16 @@ class Invoice_model extends MY_Model
     {
         $invoice = $this->select(['invoice_id', 'number', 'issued_date', 'due_date', 'status', 'type'])
             ->when('keyword', $filters['keyword'])
-            ->when('status', $filters['category'])
+            ->where('type', $filters['category'])
+            ->where('status', $filters['status'])
             ->order_by('invoice_id')
             ->paginate($page)
             ->get_all();
 
         $total = $this->select(['invoice_id', 'number'])
             ->when('keyword', $filters['keyword'])
-            ->when('status', $filters['category'])
+            ->where('type', $filters['category'])
+            ->where('status', $filters['status'])
             ->order_by('invoice_id')
             ->count();
 

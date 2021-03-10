@@ -3,6 +3,7 @@ $level              = check_level();
 $per_page           = 10;
 $keyword            = $this->input->get('keyword');
 $category           = $this->input->get('category');
+$status             = $this->input->get('status');
 $page               = $this->uri->segment(2);
 $i                  = isset($page) ? $page * $per_page - $per_page : 0;
 
@@ -47,13 +48,17 @@ $category_options = [
                     <div class="p-3">
                         <?= form_open($pages, ['method' => 'GET']); ?>
                         <div class="row">
-                            <div class="col-8 col-md-3">
+                            <div class="col-8 col-md-2">
                                 <label for="per_page">Data per halaman</label>
                                 <?= form_dropdown('per_page', get_per_page_options(), $per_page, 'id="per_page" class="form-control custom-select d-block" title="List per page"'); ?>
                             </div>
-                            <div class="col-8 col-md-3">
-                                <label for="per_page">Jenis</label>
-                                <?= form_dropdown('category', get_invoice_category(), $category, 'id="category" class="form-control custom-select d-block" title="List per page"'); ?>
+                            <div class="col-8 col-md-2">
+                                <label for="category">Jenis</label>
+                                <?= form_dropdown('category', get_invoice_category(), $category, 'id="category" class="form-control custom-select d-block" title="Invoice Category"'); ?>
+                            </div>
+                            <div class="col-8 col-md-2">
+                                <label for="status">Status</label>
+                                <?= form_dropdown('status', get_invoice_status(), $status, 'id="status" class="form-control custom-select d-block" title="Invoice Status"'); ?>
                             </div>
                             <div class="col-12 col-md-4">
                                 <label for="status">Pencarian</label>
@@ -94,7 +99,7 @@ $category_options = [
                                     >No</th>
                                     <th
                                         scope="col"
-                                        style="width:40%;"
+                                        style="width:30%;"
                                     >Nomor Faktur</th>
                                     <th
                                         scope="col"
@@ -110,7 +115,7 @@ $category_options = [
                                     >Jatuh Tempo</th>
                                     <th
                                         scope="col"
-                                        style="width:15%;"
+                                        style="width:20%;"
                                         class="pr-4"
                                     >Status</th>
                                 </tr>
@@ -139,7 +144,7 @@ $category_options = [
                                             <?= date("d/m/y", strtotime($lData->due_date)); ?>
                                         </td>
                                         <td class="align-middle pr-4">
-                                            <?= highlight_keyword($lData->status, $keyword); ?>
+                                            <?= get_invoice_status()[$lData->status]; ?>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

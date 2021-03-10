@@ -606,6 +606,19 @@ function get_invoice_category()
     ];
 }
 
+function get_invoice_status()
+{
+    return [
+        ''                  => null,
+        'waiting'           => 'Belum Konfirmasi',
+        'confirm'           => 'Sudan Konfirmasi',
+        'preparing_start'   => 'Diproses',
+        'preparing_end'     => 'Siap Diambil',
+        'finish'            => 'Selesai',
+        'cancel'            => 'Dibatalkan'
+    ];
+}
+
 function get_print_order_category()
 {
     return [
