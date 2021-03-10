@@ -27,19 +27,6 @@
                         <legend>Form Tambah Faktur</legend>
                         <div class="form-group">
                             <label
-                                for="number"
-                                class="font-weight-bold"
-                            >Nomor Faktur<abbr title="Required">*</abbr></label>
-                            <input
-                                type="text"
-                                name="number"
-                                id="number"
-                                class="form-control"
-                            />
-                        </div>
-
-                        <div class="form-group">
-                            <label
                                 for="type"
                                 class="font-weight-bold"
                             >Jenis Faktur<abbr title="Required">*</abbr></label>
@@ -50,14 +37,19 @@
                             id="invoice-type"
                             style="display: none;"
                         >
-                            <table class="table table-striped table-bordered mb-0">
-                                <tbody>
-                                    <tr>
-                                        <td width="175px"> Nomor Faktur </td>
-                                        <td id="info-invoice-number"></a></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div class="form-group">
+                                <label
+                                    for="number"
+                                    class="font-weight-bold"
+                                >Nomor Faktur<abbr title="Required">*</abbr></label>
+                                <input
+                                    type="text"
+                                    name="number"
+                                    id="number"
+                                    class="form-control"
+                                    readonly
+                                />
+                            </div>
                         </div>
 
                         <div class="form-group">
@@ -408,7 +400,7 @@ $(document).ready(function() {
             datatype: "JSON",
             success: function(res) {
                 $('#invoice-type').show()
-                $('#info-invoice-number').html(res.data)
+                $('#number').val(res.data)
             },
             error: function(err) {
                 $('#invoice-type').hide()
@@ -424,7 +416,7 @@ $(document).ready(function() {
         var url = form.attr('action');
         var redirect = form.attr('redirect');
         var form_valid = "TRUE";
-
+        console.log(form.serialize())
         $.ajax({
             type: "POST",
             url: url,
