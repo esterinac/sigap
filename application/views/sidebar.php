@@ -40,58 +40,22 @@ $menu_list = [
         'level' => 'superadmin|admin_gudang|admin_pemasaran|admin_keuangan'
     ],
     [
-        'name'  => 'Buku Gudang',
-        'icon'  => 'fa fa-warehouse',
-        'level' => 'superadmin|admin_gudang|admin_pemasaran|admin_keuangan',
-        'child' => [
-            [
-                'name'  => 'Stok Buku',
-                'url'   => 'book_stock',
-                'level' => 'superadmin|admin_gudang'
-            ],
-            [
-                'name'  => 'Penerimaan Buku',
-                'url'   => 'book_receive',
-                'level' => 'superadmin|admin_gudang'
-            ],
-            [
-                'name'  => 'Permintaan Buku',
-                'url'   => 'book_request',
-                'level' => 'superadmin|admin_gudang|admin_pemasaran'
-            ],
-            [
-                'name'  => 'Transaksi Buku Harian',
-                'url'   => 'book_transaction_daily',
-                'level' => 'superadmin|admin_gudang'
-            ],
-            [
-                'name'  => 'Transaksi Buku Bulanan',
-                'url'   => 'book_transaction_monthly',
-                'level' => 'superadmin|admin_gudang'
-            ],
-        ]
+        'name' => 'Permintaan Buku',
+        'url'  => 'book_request',
+        'icon' => 'fa fa-paperclip',
+        'level' => 'superadmin|admin_gudang|admin_pemasaran'
     ],
     [
-        'name'  => 'Logistik',
-        'icon'  => 'fa fa-paperclip',
-        'level' => 'superadmin|admin_gudang|admin_pemasaran|admin_keuangan',
-        'child' => [
-            [
-                'name'  => 'Stok Logistik',
-                'url'   => 'logistic',
-                'level' => 'superadmin|admin_gudang|admin_pemasaran|admin_keuangan'
-            ],
-            [
-                'name'  => 'Permintaan Logistik',
-                'url'   => 'logistic_request',
-                'level' => 'superadmin|admin_gudang'
-            ],
-            [
-                'name'  => 'Pembelian Logistik',
-                'url'   => 'logistic_purchase',
-                'level' => 'superadmin|admin_gudang'
-            ],
-        ]
+        'name' => 'Logistik',
+        'url'  => 'logistic',
+        'icon' => 'fa fa-warehouse',
+        'level' => 'superadmin|admin_gudang|admin_keuangan'
+    ],
+    [
+        'name' => 'Permintaan Logistik',
+        'url'  => 'logistic_request',
+        'icon' => 'fa fa-paperclip',
+        'level' => 'superadmin|admin_gudang|admin_keuangan'
     ],
     [
         'title' => 'Data',
