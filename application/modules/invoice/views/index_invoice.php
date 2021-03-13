@@ -2,18 +2,28 @@
 $level              = check_level();
 $per_page           = 10;
 $keyword            = $this->input->get('keyword');
-$category           = $this->input->get('category');
+$type               = $this->input->get('type');
 $status             = $this->input->get('status');
 $page               = $this->uri->segment(2);
 $i                  = isset($page) ? $page * $per_page - $per_page : 0;
 
 
-$category_options = [
+$type_options = [
     ''  => '- Filter Kategori Faktur -',
     'credit' => 'Kredit',
     'cash' => 'Tunai',
     'online' => 'Online',
     'showroom' => 'Showroom'
+];
+
+$status_options = [
+    ''                  => '- Filter Status Faktur -',
+    'waiting'           => 'Belum Konfirmasi',
+    'confirm'           => 'Sudan Konfirmasi',
+    'preparing_start'   => 'Diproses',
+    'preparing_end'     => 'Siap Diambil',
+    'finish'            => 'Selesai',
+    'cancel'            => 'Dibatalkan'
 ];
 ?>
 
@@ -48,23 +58,23 @@ $category_options = [
                     <div class="p-3">
                         <?= form_open($pages, ['method' => 'GET']); ?>
                         <div class="row">
-                            <div class="col-8 col-md-2">
+                            <div class="col-12 col-md-4 mt-2">
                                 <label for="per_page">Data per halaman</label>
                                 <?= form_dropdown('per_page', get_per_page_options(), $per_page, 'id="per_page" class="form-control custom-select d-block" title="List per page"'); ?>
                             </div>
-                            <div class="col-8 col-md-2">
-                                <label for="category">Jenis</label>
-                                <?= form_dropdown('category', get_invoice_category(), $category, 'id="category" class="form-control custom-select d-block" title="Invoice Category"'); ?>
+                            <div class="col-12 col-md-4 mt-2">
+                                <label for="type">Jenis</label>
+                                <?= form_dropdown('type', $type_options, $type, 'id="type" class="form-control custom-select d-block" title="Invoice Type"'); ?>
                             </div>
-                            <div class="col-8 col-md-2">
+                            <div class="col-12 col-md-4 mt-2">
                                 <label for="status">Status</label>
-                                <?= form_dropdown('status', get_invoice_status(), $status, 'id="status" class="form-control custom-select d-block" title="Invoice Status"'); ?>
+                                <?= form_dropdown('status', $status_options, $status, 'id="status" class="form-control custom-select d-block" title="Invoice Status"'); ?>
                             </div>
-                            <div class="col-12 col-md-4">
+                            <div class="col-12 col-md-8 mt-2">
                                 <label for="status">Pencarian</label>
                                 <?= form_input('keyword', $keyword, 'placeholder="Cari berdasarkan Nama, Tipe, Kategori" class="form-control"'); ?>
                             </div>
-                            <div class="col-12 col-md-2">
+                            <div class="col-12 col-md-4 mt-2">
                                 <label>&nbsp;</label>
                                 <div
                                     class="btn-group btn-block"
@@ -135,7 +145,7 @@ $category_options = [
                                             </a>
                                         </td>
                                         <td class="align-middle">
-                                            <?= get_invoice_category()[$lData->type]; ?>
+                                            <?= get_invoice_type()[$lData->type]; ?>
                                         </td>
                                         <td class="align-middle">
                                             <?= date("d/m/y", strtotime($lData->issued_date)); ?>

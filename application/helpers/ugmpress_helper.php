@@ -595,10 +595,10 @@ function expand($authors)
     return $authors_list;
 }
 
-function get_invoice_category()
+function get_invoice_type()
 {
     return [
-        ''  => '- Filter Kategori Invoice -',
+        ''  => null,
         'credit' => 'Kredit',
         'cash' => 'Tunai',
         'online' => 'Online',
@@ -609,7 +609,7 @@ function get_invoice_category()
 function get_invoice_status()
 {
     return [
-        ''                  => null,
+        '' => null,
         'waiting'           => 'Belum Konfirmasi',
         'confirm'           => 'Sudan Konfirmasi',
         'preparing_start'   => 'Diproses',

@@ -215,16 +215,16 @@ class Invoice_model extends MY_Model
     {
         $invoice = $this->select(['invoice_id', 'number', 'issued_date', 'due_date', 'status', 'type'])
             ->when('keyword', $filters['keyword'])
-            ->where('type', $filters['category'])
-            ->where('status', $filters['status'])
+            ->when('type', $filters['type'])
+            ->when('status', $filters['status'])
             ->order_by('invoice_id')
             ->paginate($page)
             ->get_all();
 
         $total = $this->select(['invoice_id', 'number'])
             ->when('keyword', $filters['keyword'])
-            ->where('type', $filters['category'])
-            ->where('status', $filters['status'])
+            ->when('type', $filters['type'])
+            ->when('status', $filters['status'])
             ->order_by('invoice_id')
             ->count();
 
@@ -247,6 +247,7 @@ class Invoice_model extends MY_Model
                 $this->group_end();
             } else {
                 $this->group_start();
+                $this->or_like('type', $data);
                 $this->or_like('status', $data);
                 $this->group_end();
             }
