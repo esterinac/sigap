@@ -96,6 +96,12 @@ $menu_list = [
         'level' => 'superadmin|admin_penerbitan'
     ],
     [
+        'name'  => 'Customer',
+        'url'   => 'customer',
+        'icon'  => 'fa fa-address-card',
+        'level' => 'superadmin|admin_pemasaran|admin_keuangan'
+    ],
+    [
         'name'  => 'Akun User',
         'url'   => 'user',
         'icon'  => 'fa fa-users',

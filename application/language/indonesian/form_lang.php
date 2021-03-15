@@ -55,6 +55,12 @@ $lang['form_user_password']   = 'Password';
 $lang['form_user_level']      = 'Level Akun';
 $lang['form_user_is_blocked'] = 'Status Akun';
 
+// Customer
+$lang['form_customer_name']       = 'Nama Pelanggan';
+$lang['form_customer_address']      = 'Alamat Pelanggan';
+$lang['form_customer_phone_number']   = 'Nomor HP Pelanggan';
+$lang['form_customer_type']      = 'Jenis Pelanggan';
+
 // Draft
 $lang['form_draft_title']       = 'Judul Draft';
 $lang['form_draft_pages']       = 'Total Halaman Draft';

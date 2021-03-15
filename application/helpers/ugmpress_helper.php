@@ -552,6 +552,11 @@ function get_user_levels()
     return ['superadmin', 'admin_penerbitan', 'author', 'reviewer', 'editor', 'layouter', 'author_reviewer', 'admin_percetakan', 'staff_percetakan', 'admin_gudang', 'admin_pemasaran', 'admin_keuangan'];
 }
 
+function get_customer_types()
+{
+    return ['distributor', 'biasalah','pemborong'];
+}
+
 function filter_boolean($data)
 {
     return filter_var($data, FILTER_VALIDATE_BOOLEAN);
