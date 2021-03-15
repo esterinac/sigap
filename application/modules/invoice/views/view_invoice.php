@@ -59,7 +59,7 @@ $level              = check_level();
                                 </tr>
                                 <tr>
                                     <td width="200px"> Tipe </td>
-                                    <td><?= $invoice->type ?></td>
+                                    <td><?= get_invoice_type()[$invoice->type]; ?></td>
                                 </tr>
                                 <!-- <tr>
                                     <td width="200px"> Nama Customer </td>
@@ -77,13 +77,12 @@ $level              = check_level();
                             </tbody>
                         </table>
                     </div>
-                    <?php if($level == 'superadmin' || $level == 'admin_gudang'): ?>
                     <hr>
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered mb-0">
                             <tbody>
                                 <tr>
-                                    <td width="200px"> Tanggal di buat </td>
+                                    <td width="200px"> Tanggal dibuat </td>
                                     <td><?= $invoice->issued_date ?></td>
                                 </tr>
                                 <tr>
@@ -94,7 +93,40 @@ $level              = check_level();
                         </table>
                     </div>
                     <hr>
-                    <?php endif; ?>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered mb-0">
+                            <tbody>
+                                <tr>
+                                    <td class="align-middle" width="200px"> Status </td>
+                                    <td class="align-middle"><?= get_invoice_status()[$invoice->status]; ?></td>
+                                    <td class="align-middle text-right"><button class="btn btn-outline-primary" data-toggle="collapse" href="#collapse1">Detail</btn></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div id="collapse1" class="panel-collapse collapse">
+                            <table class="table table-bordered mb-0">
+                                <tbody>
+                                    <tr>
+                                        <td class="align-middle" width="200px"> Tanggal Konfirmasi </td>
+                                        <td class="align-middle"><?= $invoice->confirm_date ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle" width="200px"> Tanggal Mulai Diproses </td>
+                                        <td class="align-middle"><?= $invoice->preparing_start_date ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle" width="200px"> Tanggal Selesai Diproses </td>
+                                        <td class="align-middle"><?= $invoice->preparing_end_date ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle" width="200px"> Tanggal Diambil Pemasaran </td>
+                                        <td class="align-middle"><?= $invoice->finish_date ?></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <hr>
                 </div>
 
                 <table class="table table-striped mb-0">

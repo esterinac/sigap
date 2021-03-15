@@ -616,7 +616,7 @@ function get_invoice_status()
     return [
         '' => null,
         'waiting'           => 'Belum Konfirmasi',
-        'confirm'           => 'Sudan Konfirmasi',
+        'confirm'           => 'Sudah Konfirmasi',
         'preparing_start'   => 'Diproses',
         'preparing_end'     => 'Siap Diambil',
         'finish'            => 'Selesai',
