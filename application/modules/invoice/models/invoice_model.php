@@ -37,6 +37,21 @@ class Invoice_model extends MY_Model
         return TRUE;
     }
 
+    public function update_status($invoice_id, $status)
+    {
+        if($status == 'confirm')
+        {
+            $edit = [
+                'status'          => $status,
+                'confirm_date'    => date('Y-m-d H:i:s'),
+                //'user_edited'   => $_SESSION['username']
+            ];    
+        }
+
+        $this->db->set($edit)->where('invoice_id', $invoice_id)->update('invoice');
+        return TRUE;
+    }
+
     // public function initial_stock($logistic_id, $stock_warehouse, $stock_production, $stock_other, $user_created, $date_created)
     // {
     //     $insert = [

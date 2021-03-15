@@ -13,7 +13,7 @@ $level              = check_level();
             </li>
             <li class="breadcrumb-item">
                 <a class="text-muted">
-                    <?= $lData->number ?></a>
+                    <?= $invoice->number ?></a>
             </li>
         </ol>
     </nav>
@@ -55,24 +55,24 @@ $level              = check_level();
                             <tbody>
                                 <tr>
                                     <td width="200px"> Nomor Faktur </td>
-                                    <td><strong><?= $lData->number ?></strong> </td>
+                                    <td><strong><?= $invoice->number ?></strong> </td>
                                 </tr>
                                 <tr>
                                     <td width="200px"> Tipe </td>
-                                    <td><?= $lData->type ?></td>
+                                    <td><?= $invoice->type ?></td>
                                 </tr>
                                 <!-- <tr>
                                     <td width="200px"> Nama Customer </td>
-                                    <td><?= $lData->customer_name ?></td>
+                                    <td><?= $invoice->customer_name ?></td>
                                 </tr>
 								-->
                                 <tr>
                                     <td width="200px"> Nomor Customer </td>
-                                    <td><?= $lData->customer_id ?></td>
+                                    <td><?= $invoice->customer_id ?></td>
                                 </tr>
                                 <tr>
                                     <td width="200px"> Tanggal Jatuh Tempo </td>
-                                    <td><?= $lData->due_date ?></td>
+                                    <td><?= $invoice->due_date ?></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -84,11 +84,11 @@ $level              = check_level();
                             <tbody>
                                 <tr>
                                     <td width="200px"> Tanggal di buat </td>
-                                    <td><?= $lData->issued_date ?></td>
+                                    <td><?= $invoice->issued_date ?></td>
                                 </tr>
                                 <tr>
                                     <td width="200px"> User </td>
-                                    <td>$lData->user_created</td>
+                                    <td>$invoice->user_created</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -161,8 +161,63 @@ $level              = check_level();
                     </tbody>
                 </table>
 				<br>
-				<a style="float:right;" class="btn btn-outline-danger" href="<?php echo base_url('invoice/pdf') ?>" <i class="fa fa-file"></i> Generate PDF<i class="fas fa-file-pdf fa-fw"></i></a>
+				
+                <div class="d-flex justify-content-end">
+                    <a class="btn btn-outline-danger" href="<?php echo base_url('invoice/pdf') ?>">Generate PDF<i class="fas fa-file-pdf fa-fw"></i></a>
+                    <?php if ($invoice->status == 'waiting') : ?>
+                        <?php if($level == 'superadmin' || $level == 'admin_pemasaran'): ?>
+                            <button type="button" class="btn btn-primary ml-2" data-toggle="modal" data-target="#modal-confirm-invoice">Konfirmasi</button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="modal-confirm-invoice" role="dialog"aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered"role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Konfirmasi Faktur?</h5>
+                                        </div>
+                                        <div class="modal-body">
+                                            <b> Pastikan faktur telah sesuai dengan pesanan! </b> <br>
+                                            <br>Faktur yang telah dikonfirmasi tidak dapat diubah lagi dan akan diteruskan ke bagian gudang untuk proses pengambilan buku.
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button id="btn-modal-confirm-invoice" data-dismiss="modal" type="button" class="btn btn-primary">Konfirmasi</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                $(document).ready(function() {
+                                    const invoice_id = '<?= $invoice->invoice_id ?>'
+                                    const status = 'confirm'
+                                    $('#data-invoice').on('click', '#btn-modal-confirm-invoice', function(){
+                                        //alert("eSTER");
+                                        $.ajax({
+                                            type: "POST",
+                                            url: "<?= base_url('invoice/update_status'); ?>",
+                                            data: {
+                                                'invoice_id' : invoice_id,
+                                                'status' : status
+                                            },
+                                            success: function(res) {
+                                                showToast(true, res.data);
+                                                location.reload();
+                                            },
+                                            error: function(err) {
+                                                showToast(false, err.responseJSON.message);
+                                            },
+                                            complete: function(data)
+                                            {
+                                                console.log(data);
+                                            }
+                                        });
+                                    })
+                                }) 
+                            </script>
+                        <?php endif ?>
+                    <?php endif ?>
+                </div>
 
+                
             </div>
         </div>
     </section>

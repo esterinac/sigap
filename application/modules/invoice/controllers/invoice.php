@@ -69,7 +69,7 @@ class Invoice extends MY_Controller
         // if($this->check_level() == TRUE):
         $pages          = $this->pages;
         $main_view      = 'invoice/view_invoice';
-        $lData          = $this->invoice->fetch_invoice_id($invoice_id);
+        $invoice        = $this->invoice->fetch_invoice_id($invoice_id);
         $invoice_books  = $this->invoice->fetch_invoice_book($invoice_id);
         //join invoice books + books untuk qty dan diskon
 
@@ -85,7 +85,7 @@ class Invoice extends MY_Controller
         // $stock_last     = $get_stock['stock_last'];
         // if(empty($lData) == FALSE):
         //var_dump($invoice_books);
-        $this->load->view('template', compact('pages', 'main_view', 'lData', 'invoice_books'));
+        $this->load->view('template', compact('pages', 'main_view', 'invoice', 'invoice_books'));
         // else:
         // $this->session->set_flashdata('error','Halaman tidak ditemukan.');
         // redirect(base_url(), 'refresh');
@@ -119,6 +119,15 @@ class Invoice extends MY_Controller
         }
 
         // endif;
+    }
+
+    public function update_status()
+    {
+        $invoice_id = $this->input->post('invoice_id');
+        $status = $this->input->post('status');
+    
+        $this->invoice->update_status($invoice_id, $status);
+        
     }
 
     // public function edit_logistic($logistic_id){
