@@ -1,11 +1,11 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
-class Customer extends Admin_Controller
+
+class Customer extends MY_Controller
 {
     public function __construct()
     {
         parent::__construct();
         $this->pages = 'customer';
-
         $this->load->model('customer_model', 'customer');
     }
 
@@ -22,8 +22,8 @@ class Customer extends Admin_Controller
 
         $get_data = $this->customer->filter_data($filters, $page);
 
-        $customers  = $get_data['data'];
-        $total      = $get_data['count'];
+        $customers  = $get_data['customers'];
+        $total      = $get_data['total'];
         $pages      = $this->pages;
         $main_view  = 'customer/index_customer';
         $pagination = $this->customer->make_pagination(site_url('customer'), 2, $total);

@@ -50,88 +50,88 @@ class Customer_model extends MY_Model
 
     public function filter_data($filters, $page = null)
     {
-        $query = $this->select('customer_id,name,address,phone_number,type')
+        $customers = $this->select(['customer_id', 'name', 'address', 'phone_number', 'type'])
             ->when('keyword', $filters['keyword'])
-            ->when('level', $filters['level'])
-            ->when('status', $filters['status'])
-            ->order_by('username')
-            ->order_by('level');
+            ->order_by('name')
+            ->paginate($page)
+            ->get_all();
+
+        $total = $this->select('customer_id', 'name')
+            ->when('keyword', $filters['keyword'])
+            ->order_by('customer_id')
+            ->count();
 
         return [
-            'data'  => $query->paginate($page)->get_all(),
-            'count' => $this->select('user_id')
-                ->when('keyword', $filters['keyword'])
-                ->when('level', $filters['level'])
-                ->when('status', $filters['status'])
-                ->count(),
+            'customers'  => $customers,
+            'total' => $total
         ];
     }
 
     public function when($params, $data)
     {
         // jika data null, maka skip
-        if ($data) {
-            if ($params == 'level') {
-                $this->where('level', $data);
-            }
-
+        if ($data != '') {
             if ($params == 'keyword') {
                 $this->group_start();
-                $this->like('username', $data);
-                $this->or_like('email', $data);
+                $this->or_like('customer_id', $data);
+                $this->or_like('name', $data);
+                $this->or_like('address', $data);
+                $this->or_like('phone_number', $data);
+                $this->or_like('type', $data);
                 $this->group_end();
-            }
-
-            if ($params == 'status') {
-                $this->where('is_blocked !=', $data);
+            } else {
+                $this->group_start();
+                $this->or_like('type', $data);
+                $this->or_like('status', $data);
+                $this->group_end();
             }
         }
         return $this;
     }
 
-    public function insert_data($input)
-    {
-        // clone data untuk dikirimkan via email
-        $send_mail  = $input->send_mail;
-        $email_data = clone $input;
+    // public function insert_data($input)
+    // {
+    //     // clone data untuk dikirimkan via email
+    //     $send_mail  = $input->send_mail;
+    //     $email_data = clone $input;
 
-        $input->password = md5($input->password);
+    //     $input->password = md5($input->password);
 
-        unset($input->send_mail);
-        if ($this->insert($input)) {
-            // jika sukses input data, kirim email ke user
-            if ($send_mail) {
-                $this->send_user_mail($email_data, 'email/create_user_email', 'Registrasi berhasil');
-            }
-            return true;
-        } else {
-            return false;
-        }
-    }
+    //     unset($input->send_mail);
+    //     if ($this->insert($input)) {
+    //         // jika sukses input data, kirim email ke user
+    //         if ($send_mail) {
+    //             $this->send_user_mail($email_data, 'email/create_user_email', 'Registrasi berhasil');
+    //         }
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
 
-    public function update_data($input, $user_id)
-    {
-        // clone data untuk dikirimkan vie email
-        $send_mail  = $input->send_mail;
-        $email_data = clone $input;
+    // public function update_data($input, $user_id)
+    // {
+    //     // clone data untuk dikirimkan vie email
+    //     $send_mail  = $input->send_mail;
+    //     $email_data = clone $input;
 
-        // jika update password
-        if (!empty($input->password)) {
-            $input->password = md5($input->password);
-        } else {
-            unset($input->password);
-        }
+    //     // jika update password
+    //     if (!empty($input->password)) {
+    //         $input->password = md5($input->password);
+    //     } else {
+    //         unset($input->password);
+    //     }
 
-        unset($input->send_mail);
-        if ($this->where('user_id', $user_id)->update($input)) {
-            if ($send_mail) {
-                $this->send_user_mail($email_data, 'email/update_user_email', 'Update Data Akun');
-            }
-            return true;
-        } else {
-            return false;
-        }
-    }
+    //     unset($input->send_mail);
+    //     if ($this->where('user_id', $user_id)->update($input)) {
+    //         if ($send_mail) {
+    //             $this->send_user_mail($email_data, 'email/update_user_email', 'Update Data Akun');
+    //         }
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
 
     // public function send_user_mail($input, $email_content, $subject)
     // {
@@ -154,21 +154,21 @@ class Customer_model extends MY_Model
     //     }
     // }
 
-    public function get_draft_staffs($draft_id, $staff_level)
-    {
-        return $this->select(['username', 'level', 'responsibility_id', 'responsibility.user_id'])
-            ->join_table('responsibility', 'user', 'user')
-            ->join_table('draft', 'responsibility', 'draft')
-            ->where('responsibility.draft_id', $draft_id)
-            ->where('level', $staff_level)
-            ->get_all();
-    }
+    // public function get_draft_staffs($draft_id, $staff_level)
+    // {
+    //     return $this->select(['username', 'level', 'responsibility_id', 'responsibility.user_id'])
+    //         ->join_table('responsibility', 'user', 'user')
+    //         ->join_table('draft', 'responsibility', 'draft')
+    //         ->where('responsibility.draft_id', $draft_id)
+    //         ->where('level', $staff_level)
+    //         ->get_all();
+    // }
 
-    public function get_all_staffs($level)
-    {
-        return $this->select('user_id,username,level')
-            ->where('level', $level)
-            ->order_by('username')
-            ->get_all();
-    }
+    // public function get_all_staffs($level)
+    // {
+    //     return $this->select('user_id,username,level')
+    //         ->where('level', $level)
+    //         ->order_by('username')
+    //         ->get_all();
+    // }
 }

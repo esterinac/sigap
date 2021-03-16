@@ -8,26 +8,21 @@ $page     = $this->uri->segment(2);
 $i = isset($page) ? $page * $per_page - $per_page : 0;
 
 $type_options = [
-   ''                 => '- Semua Type -',
-   'superadmin'       => 'Superadmin',
-   'admin_penerbitan' => 'Admin Penerbitan',
-   'admin_percetakan' => 'Admin Percetakan',
-   'admin_gudang'     => 'Admin Gudang',
-   'admin_pemasaran'  => 'Admin Pemasaran',
-   'admin_keuangan'   => 'Admin Keuangan',
-   'staff_percetakan' => 'Staff Percetakan',
-   'author'           => 'Author',
-   'reviewer'         => 'Reviewer',
-   'editor'           => 'Editor',
-   'layouter'         => 'Layouter',
-   'author_reviewer'  => 'Author dan Reviewer'
+    ''                 => '- Semua Type -',
+    'superadmin'       => 'Superadmin',
+    'admin_penerbitan' => 'Admin Penerbitan',
+    'admin_percetakan' => 'Admin Percetakan',
+    'admin_gudang'     => 'Admin Gudang',
+    'admin_pemasaran'  => 'Admin Pemasaran',
+    'admin_keuangan'   => 'Admin Keuangan',
+    'staff_percetakan' => 'Staff Percetakan',
+    'author'           => 'Author',
+    'reviewer'         => 'Reviewer',
+    'editor'           => 'Editor',
+    'layouter'         => 'Layouter',
+    'author_reviewer'  => 'Author dan Reviewer'
 ];
 
-$status_options = [
-   ''  => '- Semua Status -',
-   'y' => 'Aktif',
-   'n' => 'Nonaktif',
-];
 ?>
 
 <header class="page-title-bar">
@@ -63,16 +58,10 @@ $status_options = [
                             <div class="col-12 col-md-2 mb-3">
                                 <?= form_dropdown('per_page', get_per_page_options(), $per_page, 'id="per_page" class="form-control custom-select d-block" title="List per page"'); ?>
                             </div>
-                            <div class="col-12 col-md-6 mb-3">
-                                <?= form_dropdown('level', $level_options, $level, 'id="level" class="form-control custom-select d-block" title="Filter Level"'); ?>
-                            </div>
-                            <div class="col-12 col-md-4 mb-3">
-                                <?= form_dropdown('status', $status_options, $status, 'id="status" class="form-control custom-select d-block" title="Filter status"'); ?>
-                            </div>
-                            <div class="col-12 col-lg-9 mb-3">
+                            <div class="col-12 col-md-7 mb-3">
                                 <?= form_input('keyword', $keyword, ['placeholder' => 'Cari berdasarkan Nama Pengguna', 'class' => 'form-control']); ?>
                             </div>
-                            <div class="col-12 col-lg-3">
+                            <div class="col-12 col-md-3">
                                 <div
                                     class="btn-group btn-block"
                                     role="group"
@@ -93,7 +82,7 @@ $status_options = [
                         </div>
                         <?= form_close(); ?>
                     </div>
-                    <?php if ($users) : ?>
+                    <?php if ($customers) : ?>
                         <div class="table-responsive">
                             <table class="table table-striped mb-0">
                                 <thead>
@@ -110,36 +99,35 @@ $status_options = [
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($users as $user) : ?>
+                                    <?php foreach ($customers as $customer) : ?>
                                         <tr>
                                             <td class="align-middle pl-4"><?= ++$i; ?></td>
-                                            <td class="align-middle"><?= highlight_keyword($user->username, $keyword); ?></td>
-                                            <td class="align-middle"><?= highlight_keyword($user->email, $keyword); ?></td>
-                                            <td class="align-middle"><?= ucwords(str_replace('_', ' ', $user->level)); ?></td>
-                                            <td class="align-middle">
-                                                <?= $user->is_blocked == 'n' ? '<span class="badge badge-success">Aktif</span>' : '<span class="badge badge-danger">Nonaktif</span>'; ?>
-                                            </td>
+                                            <td class="align-middle"><?= highlight_keyword($customer->name, $keyword); ?></td>
+                                            <td class="align-middle"><?= highlight_keyword($customer->address, $keyword); ?></td>
+                                            <td class="align-middle"><?= highlight_keyword($customer->phone_number, $keyword); ?></td>
+                                            <td class="align-middle"><?= highlight_keyword($customer->type, $keyword); ?></td>
                                             <td class="align-middle text-right">
                                                 <a
-                                                    href="<?= base_url('user/edit/' . $user->user_id . ''); ?>"
+                                                    href="<?= base_url('customer/edit/' . $customer->customer_id . ''); ?>"
                                                     class="btn btn-sm btn-secondary"
                                                 >
                                                     <i class="fa fa-pencil-alt"></i>
                                                     <span class="sr-only">Edit</span>
                                                 </a>
-                                                <?php if ($user->username != 'superadmin') : ?>
+                                                <!--<?php if ($user->username != 'superadmin') : ?>
                                                     <button
                                                         type="button"
                                                         class="btn btn-sm btn-danger"
                                                         data-toggle="modal"
-                                                        data-target="#modal-hapus-<?= $user->user_id; ?>"
+                                                        data-target="#modal-hapus-<?= $customer->customer_id; ?>"
                                                     ><i class="fa fa-trash-alt"></i><span class="sr-only">Delete</span></button>
                                                 <?php endif; ?>
+                                                -->
                                             </td>
                                         </tr>
                                         <div
                                             class="modal modal-alert fade"
-                                            id="modal-hapus-<?= $user->user_id; ?>"
+                                            id="modal-hapus-<?= $customer->customer_id; ?>"
                                             tabindex="-1"
                                             role="dialog"
                                             aria-labelledby="modal-hapus"
@@ -155,13 +143,13 @@ $status_options = [
                                                             <i class="fa fa-exclamation-triangle text-red mr-1"></i> Konfirmasi Hapus</h5>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <p>Apakah anda yakin akan menghapus user <span class="font-weight-bold"><?= $user->username; ?></span>?</p>
+                                                        <p>Apakah anda yakin akan menghapus customer <span class="font-weight-bold"><?= $customer->name; ?></span>?</p>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button
                                                             type="button"
                                                             class="btn btn-danger"
-                                                            onclick="location.href='<?= base_url('user/delete/' . $user->user_id . ''); ?>'"
+                                                            onclick="location.href='<?= base_url('customer/delete/' . $customer->customer_id . ''); ?>'"
                                                             data-dismiss="modal"
                                                         >Hapus</button>
                                                         <button
