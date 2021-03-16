@@ -38,16 +38,12 @@
                             style="display: none;"
                         >
                             <div class="form-group">
-                                <label
-                                    for="number"
-                                    class="font-weight-bold"
-                                >Nomor Faktur<abbr title="Required">*</abbr></label>
                                 <input
                                     type="text"
                                     name="number"
                                     id="number"
                                     class="form-control"
-                                    readonly
+                                    hidden
                                 />
                             </div>
                         </div>
