@@ -20,6 +20,7 @@ class Invoice_model extends MY_Model
         ];
         $this->db->insert('invoice', $add);
 
+        // ID faktur terbaru
         $invoice_id = $this->db->insert_id();
 
         // Jumlah Buku di Faktur
@@ -44,6 +45,33 @@ class Invoice_model extends MY_Model
             $edit = [
                 'status'          => $status,
                 'confirm_date'    => date('Y-m-d H:i:s'),
+                //'user_edited'   => $_SESSION['username']
+            ];    
+        }
+
+        if($status == 'preparing_start')
+        {
+            $edit = [
+                'status'          => $status,
+                'preparing_start_date'    => date('Y-m-d H:i:s'),
+                //'user_edited'   => $_SESSION['username']
+            ];    
+        }
+
+        if($status == 'preparing_end')
+        {
+            $edit = [
+                'status'          => $status,
+                'preparing_end_date'    => date('Y-m-d H:i:s'),
+                //'user_edited'   => $_SESSION['username']
+            ];    
+        }
+
+        if($status == 'finish')
+        {
+            $edit = [
+                'status'          => $status,
+                'finish_date'    => date('Y-m-d H:i:s'),
                 //'user_edited'   => $_SESSION['username']
             ];    
         }
