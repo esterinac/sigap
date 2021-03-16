@@ -22,51 +22,61 @@ $is_add_customer = $this->uri->segment(2) == 'add';
         <div class="col-lg-8">
             <section class="card">
                 <div class="card-body">
-                    <?= form_open($form_action, 'id="form_customer" novalidate=""'); ?>
+                    <?= form_open($form_action, 'id="form_customer"') ?>
                     <fieldset>
                         <legend>Form Customer</legend>
-                        <?= isset($input->customer_id) ? form_hidden('customer_id', $input->customer_id) : ''; ?>
                         <div class="form-group">
-                            <label for="name">
-                                <?= $this->lang->line('form_customer_name'); ?>
+                            <label
+                                for="name"
+                                class="font-weight-bold"
+                            >
+                                Nama
                                 <abbr title="Required">*</abbr>
                             </label>
-                            <?= form_input('name', $input->name, 'class="form-control" id="name"'); ?>
-                            <?= form_error('name'); ?>
+                            <input
+                                type="text"
+                                name="name"
+                                id="name"
+                                class="form-control"
+                            />
                         </div>
                         <div class="form-group">
-                            <label for="address">
-                                <?= $this->lang->line('form_customer_address'); ?>
+                            <label
+                                for="address"
+                                class="font-weight-bold"
+                            >Alamat
                                 <abbr title="Required">*</abbr>
                             </label>
-                            <?= form_input('address', $input->address, 'class="form-control" id="address"'); ?>
-                            <?= form_error('address'); ?>
+                            <input
+                                type="text"
+                                name="address"
+                                id="address"
+                                class="form-control"
+                            />
                         </div>
                         <div class="form-group">
-                            <label for="phone_number">
-                                <?= $this->lang->line('form_customer_phone_number'); ?>
+                            <label
+                                for="phone-number"
+                                class="font-weight-bold"
+                            >Nomor Telepon
                                 <abbr title="Required">*</abbr>
                             </label>
-                            <?= form_input('phone_number', $input->phone_number, 'class="form-control" id="phone_number"'); ?>
-                            <?= form_error('phone_number'); ?>
+                            <input
+                                type="text"
+                                name="phone-number"
+                                id="phone-number"
+                                class="form-control"
+                            />
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>
-                                        <?= $this->lang->line('form_customer_type'); ?>
-                                        <abbr title="Required">*</abbr>
-                                    </label>
-                                    <?php foreach (get_customer_types() as $type) : ?>
-                                        <div class="custom-control custom-radio">
-                                            <?= form_radio('type', $type, isset($input->type) && ($input->type == $type) ? true : false, ' class="custom-control-input" id="' . $type . '"'); ?>
-                                            <label
-                                                class="custom-control-label"
-                                                for="<?= $type; ?>"
-                                            ><?= ucwords(str_replace('_', ' ', $type)); ?></label>
-                                        </div>
-                                    <?php endforeach; ?>
-                                    <?= form_error('type'); ?>
+                                    <label
+                                        for="type"
+                                        class="font-weight-bold"
+                                    >Jenis Customer<abbr title="Required">*</abbr></label>
+
+                                    <?= form_dropdown('type', $customer_type, 0, 'id="type" class="form-control custom-select d-block"'); ?>
                                 </div>
                             </div>
                             <!-- <?php if (!$is_add_user) : ?>
@@ -112,24 +122,3 @@ $is_add_customer = $this->uri->segment(2) == 'add';
         </div>
     </div>
 </div>
-<!-- <script>
-$(document).ready(function() {
-    loadValidateSetting();
-
-    isAddUser = '<?= $is_add_user ?>'
-    $("#form_user").validate({
-            rules: {
-                username: {
-                    crequired: true,
-                    username: true,
-                },,
-                type: "crequired"
-            },
-            errorElement: "span",
-            errorPlacement: validateErrorPlacement
-        },
-        validateSelect2()
-    );
-    console.log(isAddUser);
-})
-</script> -->

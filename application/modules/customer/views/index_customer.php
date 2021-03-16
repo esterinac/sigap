@@ -2,26 +2,9 @@
 $per_page = $this->input->get('per_page') ?? 10;
 $keyword  = $this->input->get('keyword');
 $type    = $this->input->get('type');
-$status   = $this->input->get('status');
 $page     = $this->uri->segment(2);
 // data table series number
 $i = isset($page) ? $page * $per_page - $per_page : 0;
-
-$type_options = [
-    ''                 => '- Semua Type -',
-    'superadmin'       => 'Superadmin',
-    'admin_penerbitan' => 'Admin Penerbitan',
-    'admin_percetakan' => 'Admin Percetakan',
-    'admin_gudang'     => 'Admin Gudang',
-    'admin_pemasaran'  => 'Admin Pemasaran',
-    'admin_keuangan'   => 'Admin Keuangan',
-    'staff_percetakan' => 'Staff Percetakan',
-    'author'           => 'Author',
-    'reviewer'         => 'Reviewer',
-    'editor'           => 'Editor',
-    'layouter'         => 'Layouter',
-    'author_reviewer'  => 'Author dan Reviewer'
-];
 
 ?>
 

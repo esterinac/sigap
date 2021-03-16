@@ -38,28 +38,44 @@ class Customer extends MY_Controller
 
     public function add()
     {
-        if (!$_POST) {
-            $input = (object) $this->customer->get_default_values();
+        // if (!$_POST) {
+        //     $input = (object) $this->customer->get_default_values();
+        // } else {
+        //     $input = (object) $this->input->post(null, true);
+        // }
+
+        $customer_type = array(
+            'distributor'      => 'Distributor',
+            'biasalah'      => 'Biasalah',
+            'pemborong'        => 'Pemborong',
+        );
+
+        $pages       = $this->pages;
+        $main_view   = 'customer/form_customer';
+        $form_action = 'customer/add_customer';
+        $this->load->view('template', compact('pages', 'main_view', 'form_action', 'customer_type'));
+    }
+
+    public function add_customer()
+    {
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('name', 'Nama Customer', 'required');
+        $this->form_validation->set_rules('type', 'Tipe Customer', 'required');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->session->set_flashdata('error', 'Customer gagal ditambah.');
+            redirect($_SERVER['HTTP_REFERER'], 'refresh');
         } else {
-            $input = (object) $this->input->post(null, true);
+            $check = $this->customer->add_customer();
+            if ($check   ==  TRUE) {
+                $this->session->set_flashdata('success', 'Customer berhasil ditambah.');
+                redirect('customer');
+            } else {
+                $this->session->set_flashdata('error', 'Customer gagal ditambah 2.');
+                redirect($_SERVER['HTTP_REFERER'], 'refresh');
+            }
         }
-
-        if (!$this->customer->validate()) {
-            $pages       = $this->pages;
-            $main_view   = 'customer/form_customer';
-            $form_action = 'customer/add';
-            $this->load->view('template', compact('pages', 'main_view', 'form_action', 'input'));
-            return;
-        }
-
-        // hash password
-        if ($this->user->insert_data($input)) {
-            $this->session->set_flashdata('success', $this->lang->line('toast_add_success'));
-        } else {
-            $this->session->set_flashdata('error', $this->lang->line('toast_add_fail'));
-        }
-
-        redirect($this->pages);
     }
 
     public function edit($id = null)

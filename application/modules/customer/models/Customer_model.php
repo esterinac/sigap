@@ -5,48 +5,48 @@ class Customer_model extends MY_Model
     // set public if want to override per_page
     public $per_page;
 
-    public function get_validation_rules()
-    {
-        $validation_rules = [
-            [
-                'field' => 'username',
-                'label' => $this->lang->line('form_user_name'),
-                'rules' => 'trim|required|min_length[4]|max_length[256]|callback_unique_data[username]',
-            ],
-            [
-                'field' => 'password',
-                'label' => $this->lang->line('form_user_password'),
-                'rules' => 'trim|callback_required_on[add]|min_length[4]|max_length[30]',
-            ],
-            [
-                'field' => 'email',
-                'label' => $this->lang->line('form_user_email'),
-                'rules' => 'trim|required|valid_email|callback_unique_data[email]',
-            ],
-            [
-                'field' => 'level',
-                'label' => $this->lang->line('form_user_level'),
-                'rules' => 'trim|required',
-            ],
-            [
-                'field' => 'is_blocked',
-                'label' => $this->lang->line('form_user_is_blocked'),
-                'rules' => 'trim|callback_required_on[edit]',
-            ],
-        ];
+    // public function get_validation_rules()
+    // {
+    //     $validation_rules = [
+    //         [
+    //             'field' => 'username',
+    //             'label' => $this->lang->line('form_user_name'),
+    //             'rules' => 'trim|required|min_length[4]|max_length[256]|callback_unique_data[username]',
+    //         ],
+    //         [
+    //             'field' => 'password',
+    //             'label' => $this->lang->line('form_user_password'),
+    //             'rules' => 'trim|callback_required_on[add]|min_length[4]|max_length[30]',
+    //         ],
+    //         [
+    //             'field' => 'email',
+    //             'label' => $this->lang->line('form_user_email'),
+    //             'rules' => 'trim|required|valid_email|callback_unique_data[email]',
+    //         ],
+    //         [
+    //             'field' => 'level',
+    //             'label' => $this->lang->line('form_user_level'),
+    //             'rules' => 'trim|required',
+    //         ],
+    //         [
+    //             'field' => 'is_blocked',
+    //             'label' => $this->lang->line('form_user_is_blocked'),
+    //             'rules' => 'trim|callback_required_on[edit]',
+    //         ],
+    //     ];
 
-        return $validation_rules;
-    }
+    //     return $validation_rules;
+    // }
 
-    public function get_default_values()
-    {
-        return [
-            'name'   => null,
-            'address'   => null,
-            'phone_number'      => null,
-            'type'      => null,
-        ];
-    }
+    // public function get_default_values()
+    // {
+    //     return [
+    //         'name'   => null,
+    //         'address'   => null,
+    //         'phone_number'      => null,
+    //         'type'      => null,
+    //     ];
+    // }
 
     public function filter_data($filters, $page = null)
     {
@@ -87,6 +87,18 @@ class Customer_model extends MY_Model
             }
         }
         return $this;
+    }
+
+    public function add_customer()
+    {
+        $add = [
+            'name'            => $this->input->post('name'),
+            'address'       => $this->input->post('address'),
+            'phone_number'          => $this->input->post('phone-number'),
+            'type'              => $this->input->post('type')
+        ];
+        $this->db->insert('customer', $add);
+        return TRUE;
     }
 
     // public function insert_data($input)
