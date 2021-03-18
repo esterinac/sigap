@@ -91,12 +91,34 @@ class Customer_model extends MY_Model
 
     public function add_customer()
     {
+        $type = $this->input->post('type');
+        $discount = 0;
+        switch ($type) {
+            case 'Distributor':
+                $discount = 45;
+                break;
+            case 'Reseller':
+                $discount = 35;
+                break;
+            case 'Penulis':
+                $discount = 30;
+                break;
+            case 'Member':
+                $discount = 25;
+                break;
+            case 'Biasa':
+                $discount = 15;
+                break;
+        }
+
         $add = [
-            'name'            => $this->input->post('name'),
+            'name'          => $this->input->post('name'),
             'address'       => $this->input->post('address'),
-            'phone_number'          => $this->input->post('phone-number'),
-            'type'              => $this->input->post('type')
+            'phone_number'  => $this->input->post('phone-number'),
+            'type'          => $this->input->post('type'),
+            'discount'      => $discount
         ];
+
         $this->db->insert('customer', $add);
         return TRUE;
     }

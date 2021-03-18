@@ -375,6 +375,7 @@ $(document).ready(function() {
             url: "<?= base_url('invoice/api_get_customer/'); ?>" + customerId,
             datatype: "JSON",
             success: function(res) {
+                $('#discount').val(res.data.discount)
                 $('#customer-info').show()
                 $('#info-customer-name').html(res.data.name)
                 $('#info-address').html(res.data.address)

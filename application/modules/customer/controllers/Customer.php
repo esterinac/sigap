@@ -45,9 +45,11 @@ class Customer extends MY_Controller
         // }
 
         $customer_type = array(
-            'distributor'      => 'Distributor',
-            'biasalah'      => 'Biasalah',
-            'pemborong'        => 'Pemborong',
+            'Distributor'      => 'Distributor',
+            'Reseller'      => 'Reseller',
+            'Penulis'        => 'Penulis',
+            'Member'        => 'Member',
+            'Biasa'        => ' - '
         );
 
         $pages       = $this->pages;
@@ -59,7 +61,6 @@ class Customer extends MY_Controller
     public function add_customer()
     {
         $this->load->library('form_validation');
-
         $this->form_validation->set_rules('name', 'Nama Customer', 'required');
         $this->form_validation->set_rules('type', 'Tipe Customer', 'required');
 

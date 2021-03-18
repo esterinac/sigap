@@ -40,40 +40,36 @@ class Invoice_model extends MY_Model
 
     public function update_status($invoice_id, $status)
     {
-        if($status == 'confirm')
-        {
+        if ($status == 'confirm') {
             $edit = [
                 'status'          => $status,
                 'confirm_date'    => date('Y-m-d H:i:s'),
                 //'user_edited'   => $_SESSION['username']
-            ];    
+            ];
         }
 
-        if($status == 'preparing_start')
-        {
+        if ($status == 'preparing_start') {
             $edit = [
                 'status'          => $status,
                 'preparing_start_date'    => date('Y-m-d H:i:s'),
                 //'user_edited'   => $_SESSION['username']
-            ];    
+            ];
         }
 
-        if($status == 'preparing_end')
-        {
+        if ($status == 'preparing_end') {
             $edit = [
                 'status'          => $status,
                 'preparing_end_date'    => date('Y-m-d H:i:s'),
                 //'user_edited'   => $_SESSION['username']
-            ];    
+            ];
         }
 
-        if($status == 'finish')
-        {
+        if ($status == 'finish') {
             $edit = [
                 'status'          => $status,
                 'finish_date'    => date('Y-m-d H:i:s'),
                 //'user_edited'   => $_SESSION['username']
-            ];    
+            ];
         }
 
         $this->db->set($edit)->where('invoice_id', $invoice_id)->update('invoice');
@@ -242,7 +238,7 @@ class Invoice_model extends MY_Model
                 $initial = 'T';
                 break;
             case 'online':
-                $initial = 'TO';
+                $initial = 'O';
                 break;
             case 'showroom':
                 $initial = 'S';
@@ -260,7 +256,7 @@ class Invoice_model extends MY_Model
             ->when('keyword', $filters['keyword'])
             ->when('type', $filters['type'])
             ->when('status', $filters['status'])
-            ->order_by('invoice_id')
+            ->order_by('invoice_id', 'DESC')
             ->paginate($page)
             ->get_all();
 
