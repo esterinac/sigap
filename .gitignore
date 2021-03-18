@@ -4,6 +4,65 @@
 */cache/*
 !*/cache/index.html
 !*/cache/.htaccess
+# app document file
+authorktp/*
+!authorktp/.gitkeep
+!authorktp/.htaccess
+!authorktp/index.html
+
+# draft file
+draftfile/*
+!draftfile/.gitkeep
+!draftfile/.htaccess
+!draftfile/index.html
+
+# draft file
+bookfile/*
+!bookfile/.gitkeep
+!bookfile/.htaccess
+!bookfile/index.html
+
+# hakcipta file
+hakcipta/*
+!hakcipta/.gitkeep
+!hakcipta/.htaccess
+!hakcipta/index.html
+
+# document file
+documentfile/*
+!documentfile/.gitkeep
+!documentfile/.htaccess
+!documentfile/index.html
+
+# document file
+printorderfile/*
+!printorderfile/.gitkeep
+!printorderfile/.htaccess
+!printorderfile/index.html
+
+# document file
+preprintfile/*
+!preprintfile/.gitkeep
+!preprintfile/.htaccess
+!preprintfile/index.html
+
+.env
+.env.development
+.env.production
+
+.DS_Store
+
+application/cache/*
+!application/cache/index.html
+
+application/logs/*
+!application/logs/index.html
+
+!application/*/.htaccess
+
+cacheassets
+
+#composer.lock
 
 user_guide_src/build/*
 user_guide_src/cilexer/build/*
@@ -20,3 +79,19 @@ application/logs/*
 *.sqlite
 .vs/sigaproyalti/v16/.suo
 .vs/VSWorkspaceState.json
+/vendor/
+
+# IDE Files
+#-------------------------
+/nbproject/
+.idea/*
+
+## Sublime Text cache files
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+*.sublime-workspace
+*.sublime-project
+/tests/tests/
+/tests/results/
+node_modules
